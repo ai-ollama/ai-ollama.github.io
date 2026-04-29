@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+  <meta name="robots" content="index,follow" />
+  <title>Install Ollama on Windows — Step‑by‑Step Guide | AI Ollama Helper</title>
+  <meta name="description" content="How to install Ollama on Windows: download, run the installer, verify, and pull your first LLM (Llama 3). Tips for GPU, firewall, and common pitfalls." />
+  <link rel="canonical" href="https://ai-ollama.github.io/install-windows.html" />
+  <meta name="theme-color" content="#0a67ff" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="Install Ollama on Windows — Step‑by‑Step Guide" />
+  <meta property="og:description" content="Download and install Ollama on Windows in minutes. Verify the CLI, pull your first model, and run locally." />
+  <meta property="og:image" content="https://ai-ollama.github.io/ollama-og-image.png" />
+  <meta property="og:url" content="https://ai-ollama.github.io/install-windows.html" />
+  <meta property="og:site_name" content="AI Ollama Helper" />
+  <meta property="og:locale" content="en_US" />
+  <meta property="article:published_time" content="2026-04-29T17:04:30Z" />
+  <meta property="article:modified_time" content="2026-04-29T17:04:30Z" />
+  <meta property="og:updated_time" content="2026-04-29T17:04:30Z" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Install Ollama on Windows — Step‑by‑Step Guide" />
+  <meta name="twitter:description" content="Download and install Ollama on Windows in minutes. Verify the CLI, pull your first model, and run locally." />
+  <meta name="twitter:image" content="https://ai-ollama.github.io/ollama-og-image.png" />
+
+  <!-- Schema.org: Breadcrumbs -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {"@type": "ListItem", "position": 1, "name": "Download", "item": "https://ai-ollama.github.io/"},
+      {"@type": "ListItem", "position": 2, "name": "Install on Windows", "item": "https://ai-ollama.github.io/install-windows.html"}
+    ]
+  }
+  </script>
+
+  <!-- Schema.org: HowTo -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    "name": "Install Ollama on Windows",
+    "description": "Step-by-step instructions to install Ollama, verify the CLI, and run your first local LLM.",
+    "totalTime": "PT5M",
+    "tool": [{"@type": "HowToTool", "name": "Windows 10/11 (64-bit)"}],
+    "step": [
+      {"@type": "HowToStep", "name": "Download the installer", "url": "https://ai-ollama.github.io/install-windows.html#step-1-download", "itemListElement": [{"@type": "HowToDirection", "text": "Open the official download page and get the Windows installer."}]},
+      {"@type": "HowToStep", "name": "Run the installer", "url": "https://ai-ollama.github.io/install-windows.html#step-2-install", "itemListElement": [{"@type": "HowToDirection", "text": "Launch the .exe, follow prompts, and finish installation."}]},
+      {"@type": "HowToStep", "name": "Verify the CLI", "url": "https://ai-ollama.github.io/install-windows.html#step-3-verify", "itemListElement": [{"@type": "HowToDirection", "text": "Open Command Prompt or PowerShell and run 'ollama --version'."}]},
+      {"@type": "HowToStep", "name": "Pull a model", "url": "https://ai-ollama.github.io/install-windows.html#step-4-pull", "itemListElement": [{"@type": "HowToDirection", "text": "Use 'ollama pull llama3' to download a starter model."}]},
+      {"@type": "HowToStep", "name": "Run locally", "url": "https://ai-ollama.github.io/install-windows.html#step-5-run", "itemListElement": [{"@type": "HowToDirection", "text": "Run 'ollama run llama3' and start chatting."}]}
+    ]
+  }
+  </script>
+
+  <!-- Schema.org: WebPage (Last updated) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "Install Ollama on Windows — Step-by-Step Guide",
+    "url": "https://ai-ollama.github.io/install-windows.html",
+    "datePublished": "2026-04-29",
+    "dateModified": "2026-04-29"
+  }
+  </script>
+
+  <!-- Favicons -->
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+  <link rel="manifest" href="/site.webmanifest" />
+  <link rel="shortcut icon" href="/favicon.ico" />
+
+  <style>
+    :root{ --accent:#0a67ff; --bg:#f6f8fb; --text:#1f2937; --muted:#556277; --card:#fff; --border:#e5e8ee; --code:#0f172a; --ok:#1db954; }
+    *{ box-sizing:border-box }
+    html,body{ margin:0; padding:0; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; color:var(--text); background:var(--bg); line-height:1.6 }
+
+    .skip-link{ position:absolute; left:-9999px; top:auto; width:1px; height:1px; overflow:hidden }
+    .skip-link:focus{ position:static; width:auto; height:auto; padding:8px 12px; background:var(--accent); color:#fff; z-index:9999 }
+
+    .container{ max-width:1100px; margin:0 auto; padding:0 20px }
+    header{ position:sticky; top:0; background:var(--card); border-bottom:1px solid var(--border); z-index:40 }
+    .header-inner{ display:flex; align-items:center; justify-content:space-between; padding:14px 0 }
+    .brand{ display:flex; align-items:center; gap:12px; text-decoration:none; color:inherit }
+    .brand-logo{ width:40px; height:40px; border-radius:10px; background:var(--accent); display:grid; place-items:center; color:#fff; font-weight:900; letter-spacing:.5px }
+    .brand-title{ font-weight:800 }
+    .brand-sub{ font-size:12px; color:var(--muted) }
+
+    nav[aria-label="Primary"] ul{ list-style:none; margin:0; padding:0; display:flex; gap:14px; flex-wrap:wrap }
+    nav[aria-label="Primary"] a{ color:#334155; text-decoration:none; font-weight:700; padding:8px 10px; border-radius:10px }
+    nav[aria-label="Primary"] a:hover{ background:#eef4ff; color:var(--accent) }
+
+    .hero{ padding:44px 0 18px }
+    .hero h1{ font-size:36px; line-height:1.15; margin:0 0 8px; color:var(--accent); font-weight:900 }
+    .subtitle{ font-size:18px; color:var(--muted); max-width:780px }
+
+    .btn{ display:inline-flex; align-items:center; gap:8px; padding:12px 20px; font-weight:800; color:#fff; background:var(--accent); border-radius:10px; text-decoration:none; box-shadow:0 10px 18px -10px rgba(10,103,255,.5); transition:.18s; font-size:15px }
+    .btn:hover{ transform:translateY(-1px); box-shadow:0 16px 26px -12px rgba(10,103,255,.6) }
+
+    .layout{ display:grid; grid-template-columns: 2fr 1fr; gap:18px }
+    @media (max-width:960px){ .layout{ grid-template-columns: 1fr } }
+
+    .card{ background:var(--card); border:1px solid var(--border); border-radius:16px; padding:22px; box-shadow:0 1px 3px rgba(0,0,0,.06) }
+    .card h2{ font-size:22px; margin:0 0 10px }
+    .card h3{ font-size:18px; margin:16px 0 6px }
+    .card p{ color:var(--muted); margin:0 0 10px }
+
+    .step{ margin-bottom:14px }
+    .step-id{ display:inline-block; min-width:28px; height:28px; border-radius:8px; background:#eef4ff; color:#0b5fff; font-weight:800; display:grid; place-items:center; margin-right:8px }
+
+    .code{ background:var(--code); color:#e2e8f0; padding:14px 16px; border-radius:10px; font-family:SFMono-Regular,Consolas,Menlo,monospace; font-size:14px; overflow-x:auto; border-left:4px solid var(--accent) }
+
+    .tips{ list-style:disc; padding-left:18px; color:#556277 }
+
+    .quicklinks{ display:grid; grid-template-columns: 1fr; gap:10px }
+    .q-item{ display:block; padding:12px 14px; border:1px solid var(--border); border-radius:12px; text-decoration:none; color:#0f172a }
+    .q-item:hover{ border-color:#d4dbee; background:#fbfdff }
+
+    footer{ margin-top:36px; background:var(--card); border-top:1px solid var(--border); padding:26px 0; color:#6b7280; font-size:14px }
+    .footer-links{ display:flex; gap:16px; justify-content:center; flex-wrap:wrap; margin-bottom:8px }
+    .footer-links a{ color:#6b7280; text-decoration:none }
+    .footer-links a:hover{ text-decoration:underline }
+
+    /* Cookie banner */
+    .cookie-banner{ position:fixed; inset-inline:0; bottom:0; background:rgba(15,23,42,.96); color:#fff; display:none; gap:14px; align-items:flex-start; padding:16px 18px; z-index:1000; box-shadow:0 -8px 24px rgba(0,0,0,.35) }
+    .cookie-banner.show{ display:flex }
+    .cookie-banner p{ margin:0; flex:1; line-height:1.5 }
+    .cookie-banner a{ color:#a0c4ff; text-decoration:underline }
+    .cookie-actions{ display:flex; gap:10px; flex-wrap:wrap }
+    .cookie-btn{ border:none; padding:10px 16px; border-radius:8px; cursor:pointer; font-weight:700 }
+    .cookie-accept{ background:var(--accent); color:#fff }
+    .cookie-reject{ background:#334155; color:#e2e8f0 }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header>
+    <div class="container header-inner">
+      <a href="/" class="brand" aria-label="AI Ollama Helper home">
+        <div class="brand-logo" aria-hidden="true">AI</div>
+        <div>
+          <div class="brand-title">AI Ollama Helper</div>
+          <div class="brand-sub">Local LLM Hub</div>
+        </div>
+      </a>
+      <nav aria-label="Primary">
+        <ul>
+          <li><a href="/">Download</a></li>
+          <li><a href="/install-windows.html" aria-current="page">Install</a></li>
+          <li><a href="/models.html">Models</a></li>
+          <li><a href="/python.html">Python</a></li>
+          <li><a href="/faq.html">FAQ</a></li>
+          <li><a href="/update.html">Update</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" class="container">
+    <section class="hero" aria-labelledby="title">
+      <h1 id="title">Install Ollama on Windows</h1>
+      <p class="subtitle">A quick, reliable setup: download the official installer, verify the CLI, pull your first model, and run locally — all in a few minutes.</p>
+      <p>
+        <a class="btn" href="https://ollama.com/download/windows" target="_blank" rel="noopener noreferrer" aria-label="Download Ollama for Windows (official site)">⬇️ Download Ollama for Windows (Official)</a>
+      </p>
+    </section>
+
+    <section class="layout" aria-label="Install guide">
+      <!-- Main guide -->
+      <div class="card">
+        <h2>Step‑by‑step</h2>
+
+        <div class="step" id="step-1-download">
+          <span class="step-id" aria-hidden="true">1</span>
+          <strong>Download the installer</strong>
+          <p>Open the official download page and get the Windows .exe.</p>
+          <p><a class="btn" href="https://ollama.com/download/windows" target="_blank" rel="noopener noreferrer">Go to official download</a></p>
+        </div>
+
+        <div class="step" id="step-2-install">
+          <span class="step-id" aria-hidden="true">2</span>
+          <strong>Run the installer</strong>
+          <p>Launch the .exe and follow prompts. The installer adds the <code>ollama</code> CLI and a background service. If a firewall dialog appears, allow local access.</p>
+        </div>
+
+        <div class="step" id="step-3-verify">
+          <span class="step-id" aria-hidden="true">3</span>
+          <strong>Verify the CLI</strong>
+          <p>Open Command Prompt or PowerShell and check that Ollama is available. If the command isn’t found, open a new terminal window.</p>
+          <div class="code">ollama --version</div>
+        </div>
+
+        <div class="step" id="step-4-pull">
+          <span class="step-id" aria-hidden="true">4</span>
+          <strong>Pull your first model</strong>
+          <p>Download a starter model like Llama 3:</p>
+          <div class="code">ollama pull llama3</div>
+        </div>
+
+        <div class="step" id="step-5-run">
+          <span class="step-id" aria-hidden="true">5</span>
+          <strong>Run locally</strong>
+          <p>Start a local chat session with the model:</p>
+          <div class="code">ollama run llama3</div>
+          <p>To verify the local API is up, you can also check the tags endpoint in a browser: <code>http://localhost:11434/api/tags</code>.</p>
+        </div>
+
+        <h3>What’s next?</h3>
+        <ul class="tips">
+          <li>For better performance with NVIDIA/DirectML, see <a href="/gpu-acceleration.html">GPU Acceleration</a>.</li>
+          <li>Explore more models in the <a href="/models.html">Models Hub</a> (Llama 3, Mistral, Qwen 2.5, Gemma 2, Phi‑4).</li>
+          <li>If something goes wrong, visit <a href="/troubleshooting.html">Troubleshooting</a>.</li>
+        </ul>
+      </div>
+
+      <!-- Sidebar: tips & common pitfalls -->
+      <aside class="card" aria-labelledby="tips-title">
+        <h2 id="tips-title">Tips & common pitfalls</h2>
+        <h3>Firewall & port</h3>
+        <p>Ollama runs a local server on <code>localhost:11434</code>. If prompted by Windows Firewall, allow local connections. Corporate firewalls may require exceptions.</p>
+        <h3>Drivers & GPU</h3>
+        <p>For GPU acceleration, keep your GPU drivers up to date. See <a href="/gpu-acceleration.html">GPU Acceleration</a> for CUDA/DirectML notes.</p>
+        <h3>Disk space</h3>
+        <p>Models can take <strong>~5–15 GB</strong> each depending on quantization and size. Ensure you have space on the drive where models are stored.</p>
+        <h3>PATH not updated?</h3>
+        <p>If <code>ollama</code> isn’t found, close and reopen your terminal. In rare cases, sign out and sign back in to refresh PATH.</p>
+        <h3>Uninstall</h3>
+        <p>Need to remove Ollama? Follow <a href="/uninstall.html">Uninstall</a> to clean up the app and model files safely.</p>
+        <div class="quicklinks" style="margin-top:10px">
+          <a class="q-item" href="/models.html">Browse models →</a>
+          <a class="q-item" href="/faq.html">Read the FAQ →</a>
+          <a class="q-item" href="/update.html">How to update →</a>
+        </div>
+      </aside>
+    </section>
+
+    <p style="color:#64748b; margin-top:14px">Community‑driven guide. Not affiliated with the official Ollama project.</p>
+  </main>
+
+  <footer>
+    <div class="container">
+      <div class="footer-links">
+        <a href="/privacy.html">Privacy Policy</a>
+        <a href="/terms.html">Terms of Service</a>
+        <a href="/sitemap.xml">Sitemap</a>
+        <a href="#" id="open-cookie-preferences">Cookie preferences</a>
+      </div>
+      <div style="text-align:center;">© <span id="year"></span> AI Ollama Helper Project • Community resource</div>
+      <div class="last-updated" style="margin-top:6px; font-size:13px; color:#64748b; text-align:center;">Last updated: April 29, 2026</div>
+    </div>
+  </footer>
+
+  <!-- Cookie Consent -->
+  <div id="cookie-banner" class="cookie-banner" role="dialog" aria-live="polite" aria-label="Cookie consent banner">
+    <p>
+      We use basic analytics to improve this site. You can accept or reject optional cookies. Learn more in our <a href="/privacy.html">Privacy Policy</a>.
+    </p>
+    <div class="cookie-actions">
+      <button class="cookie-btn cookie-reject" id="cookie-reject">Reject</button>
+      <button class="cookie-btn cookie-accept" id="cookie-accept">Accept</button>
+    </div>
+  </div>
+
+  <script>
+    // Footer year
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Consent-gated GA loader (same behavior as on the home page)
+    const CONSENT_KEY='cookieConsent';
+    function loadGA(){ if(window.__gaLoaded) return; window.__gaLoaded=true; const s=document.createElement('script'); s.async=true; s.src='https://www.googletagmanager.com/gtag/js?id=G-JZTGSFRZBD'; document.head.appendChild(s); window.dataLayer=window.dataLayer||[]; function gtag(){dataLayer.push(arguments)} window.gtag=gtag; gtag('js', new Date()); gtag('config','G-JZTGSFRZBD'); }
+    function showBanner(){document.getElementById('cookie-banner').classList.add('show')} function hideBanner(){document.getElementById('cookie-banner').classList.remove('show')}
+    (function(){ const saved=localStorage.getItem(CONSENT_KEY); if(!saved){ setTimeout(showBanner,600); } else if(saved==='accepted'){ loadGA(); }
+      document.getElementById('cookie-accept').addEventListener('click',function(){ localStorage.setItem(CONSENT_KEY,'accepted'); hideBanner(); loadGA(); });
+      document.getElementById('cookie-reject').addEventListener('click',function(){ localStorage.setItem(CONSENT_KEY,'rejected'); hideBanner(); });
+      document.getElementById('open-cookie-preferences').addEventListener('click',function(e){ e.preventDefault(); showBanner(); });
+    })();
+  </script>
+</body>
+</html>

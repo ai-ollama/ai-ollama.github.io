@@ -4,34 +4,47 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
   <meta name="robots" content="index,follow" />
-  <title>Privacy Policy | AI Ollama Helper</title>
-  <meta name="description" content="AI Ollama Helper privacy policy: what data we collect, cookies/local storage, analytics after consent, your choices, and how to contact us." />
-  <link rel="canonical" href="https://ai-ollama.github.io/privacy.html" />
+  <title>Qwen 2.5 for Ollama — Multilingual Reasoning, Run Locally | AI Ollama Helper</title>
+  <meta name="description" content="Run Qwen 2.5 locally with Ollama on Windows. Strong reasoning and multilingual support. Quick pull/run commands, variants, and best‑practice tips." />
+  <link rel="canonical" href="https://ai-ollama.github.io/qwen-2-5.html" />
   <meta name="theme-color" content="#0a67ff" />
 
   <!-- Open Graph -->
   <meta property="og:type" content="article" />
-  <meta property="og:title" content="Privacy Policy — AI Ollama Helper" />
-  <meta property="og:description" content="Learn how AI Ollama Helper handles data, cookies/local storage, and analytics. We load analytics only after you consent." />
+  <meta property="og:title" content="Qwen 2.5 for Ollama — Multilingual Reasoning, Run Locally" />
+  <meta property="og:description" content="Pull and run Qwen 2.5 with Ollama on Windows. Great multilingual capabilities and reasoning." />
   <meta property="og:image" content="https://ai-ollama.github.io/ollama-og-image.png" />
-  <meta property="og:url" content="https://ai-ollama.github.io/privacy.html" />
+  <meta property="og:url" content="https://ai-ollama.github.io/qwen-2-5.html" />
   <meta property="og:site_name" content="AI Ollama Helper" />
   <meta property="og:locale" content="en_US" />
   <meta property="og:updated_time" content="2026-04-29T17:04:30Z" />
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Privacy Policy — AI Ollama Helper" />
-  <meta name="twitter:description" content="We only load analytics after consent. Read about cookies/local storage, what we collect, and your choices." />
+  <meta name="twitter:title" content="Qwen 2.5 for Ollama — Multilingual Reasoning, Run Locally" />
+  <meta name="twitter:description" content="Pull and run Qwen 2.5 with Ollama on Windows. Great multilingual capabilities and reasoning." />
   <meta name="twitter:image" content="https://ai-ollama.github.io/ollama-og-image.png" />
+
+  <!-- Schema.org: Breadcrumbs -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {"@type": "ListItem", "position": 1, "name": "Download", "item": "https://ai-ollama.github.io/"},
+      {"@type": "ListItem", "position": 2, "name": "Models Hub", "item": "https://ai-ollama.github.io/models.html"},
+      {"@type": "ListItem", "position": 3, "name": "Qwen 2.5", "item": "https://ai-ollama.github.io/qwen-2-5.html"}
+    ]
+  }
+  </script>
 
   <!-- Schema.org: WebPage (Last updated) -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "WebPage",
-    "name": "Privacy Policy",
-    "url": "https://ai-ollama.github.io/privacy.html",
+    "name": "Qwen 2.5 for Ollama — Multilingual Reasoning, Run Locally",
+    "url": "https://ai-ollama.github.io/qwen-2-5.html",
     "datePublished": "2026-04-29",
     "dateModified": "2026-04-29"
   }
@@ -45,18 +58,18 @@
   <link rel="shortcut icon" href="/favicon.ico" />
 
   <style>
-    :root{ --accent:#0a67ff; --bg:#f6f8fb; --text:#1f2937; --muted:#556277; --card:#fff; --border:#e5e8ee; }
+    :root{ --accent:#0a67ff; --bg:#f6f8fb; --text:#1f2937; --muted:#556277; --card:#fff; --border:#e5e8ee; --code:#0f172a; }
     *{ box-sizing:border-box }
     html,body{ margin:0; padding:0; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; color:var(--text); background:var(--bg); line-height:1.6 }
 
     .skip-link{ position:absolute; left:-9999px; top:auto; width:1px; height:1px; overflow:hidden }
     .skip-link:focus{ position:static; width:auto; height:auto; padding:8px 12px; background:var(--accent); color:#fff; z-index:9999 }
 
-    .container{ max-width:900px; margin:0 auto; padding:0 20px }
+    .container{ max-width:1100px; margin:0 auto; padding:0 20px }
     header{ position:sticky; top:0; background:var(--card); border-bottom:1px solid var(--border); z-index:40 }
     .header-inner{ display:flex; align-items:center; justify-content:space-between; padding:14px 0 }
     .brand{ display:flex; align-items:center; gap:12px; text-decoration:none; color:inherit }
-    .brand-logo{ width:40px; height:40px; border-radius:10px; background:var(--accent); display:grid; place-items:center; color:#fff; font-weight:900 }
+    .brand-logo{ width:40px; height:40px; border-radius:10px; background:var(--accent); display:grid; place-items:center; color:#fff; font-weight:900; letter-spacing:.5px }
     .brand-title{ font-weight:800 }
     .brand-sub{ font-size:12px; color:var(--muted) }
 
@@ -64,15 +77,23 @@
     nav[aria-label="Primary"] a{ color:#334155; text-decoration:none; font-weight:700; padding:8px 10px; border-radius:10px }
     nav[aria-label="Primary"] a:hover{ background:#eef4ff; color:var(--accent) }
 
-    main{ padding:36px 0 0 }
-    h1{ font-size:34px; color:var(--accent); margin:0 0 6px; font-weight:900 }
-    .lead{ color:var(--muted); margin:0 0 16px }
-    h2{ margin:20px 0 8px; font-size:20px }
-    p{ color:#3b4756; margin:0 0 10px }
-    ul{ color:#3b4756 }
-    .card{ background:var(--card); border:1px solid var(--border); border-radius:16px; padding:18px; box-shadow:0 1px 3px rgba(0,0,0,.06); margin-bottom:14px }
+    .hero{ padding:44px 0 18px; text-align:center }
+    .hero h1{ font-size:36px; line-height:1.15; margin:0 0 8px; color:var(--accent); font-weight:900 }
+    .subtitle{ font-size:18px; color:var(--muted); max-width:780px; margin:0 auto 12px }
+    .cta-row{ display:flex; gap:10px; justify-content:center; flex-wrap:wrap; margin-top:8px }
+    .btn{ display:inline-flex; align-items:center; gap:8px; padding:12px 20px; font-weight:800; color:#fff; background:var(--accent); border-radius:10px; text-decoration:none; box-shadow:0 10px 18px -10px rgba(10,103,255,.5); transition:.18s; font-size:15px }
+    .btn:hover{ transform:translateY(-1px); box-shadow:0 16px 26px -12px rgba(10,103,255,.6) }
+    .btn-secondary{ background:#334155 }
 
-    .note{ color:#64748b; font-size:14px; margin-top:8px }
+    .grid{ display:grid; grid-template-columns: 2fr 1fr; gap:16px }
+    @media (max-width:960px){ .grid{ grid-template-columns: 1fr } }
+
+    .card{ background:var(--card); border:1px solid var(--border); border-radius:16px; padding:18px; box-shadow:0 1px 3px rgba(0,0,0,.06) }
+    .card h2{ font-size:20px; margin:0 0 6px }
+    .card p{ color:var(--muted); margin:0 0 8px }
+    .code{ background:var(--code); color:#e2e8f0; padding:12px 14px; border-radius:10px; font-family:SFMono-Regular,Consolas,Menlo,monospace; font-size:13px; overflow-x:auto; border-left:4px solid var(--accent); margin-top:6px }
+
+    .note{ color:#64748b; font-size:14px; margin-top:10px; }
 
     footer{ margin-top:36px; background:var(--card); border-top:1px solid var(--border); padding:26px 0; color:#6b7280; font-size:14px }
     .footer-links{ display:flex; gap:16px; justify-content:center; flex-wrap:wrap; margin-bottom:8px }
@@ -108,84 +129,66 @@
           <li><a href="/models.html">Models</a></li>
           <li><a href="/python.html">Python</a></li>
           <li><a href="/faq.html">FAQ</a></li>
-          <li><a href="/privacy-offline.html">Privacy & Offline</a></li>
+          <li><a href="/update.html">Update</a></li>
         </ul>
       </nav>
     </div>
   </header>
 
   <main id="main" class="container">
-    <h1>Privacy Policy</h1>
-    <p class="lead">We keep things simple: we only load basic analytics if you consent, and we don’t collect personal data for this site’s functionality.</p>
-
-    <section class="card" aria-labelledby="who">
-      <h2 id="who">Who we are</h2>
-      <p>AI Ollama Helper is a community‑driven site that helps users run local LLMs with Ollama on Windows. This site is not affiliated with the official Ollama project.</p>
+    <section class="hero" aria-labelledby="title">
+      <h1 id="title">Qwen 2.5</h1>
+      <p class="subtitle">Strong reasoning and multilingual capabilities. Run locally with Ollama on Windows.</p>
+      <div class="cta-row">
+        <a class="btn" href="https://ollama.com/download/windows" target="_blank" rel="noopener noreferrer" aria-label="Download Ollama for Windows (official site)">⬇️ Download Ollama</a>
+        <a class="btn btn-secondary" href="/install-windows.html">Install Guide</a>
+      </div>
     </section>
 
-    <section class="card" aria-labelledby="what">
-      <h2 id="what">What we collect</h2>
-      <p>By default, we do not collect or store personal information. If you click “Accept” in the cookie banner, we load basic analytics (see below). We also store your consent choice locally on your device.</p>
-      <ul>
-        <li>Consent state (accepted/rejected) stored in your browser’s local storage.</li>
-        <li>Basic analytics (page views and a few events like download button clicks) only after you consent.</li>
-      </ul>
+    <section class="grid" aria-label="Qwen quick start">
+      <article class="card" aria-labelledby="quick">
+        <h2 id="quick">Quick start</h2>
+        <p>Pull and run the default Qwen 2.5:</p>
+        <div class="code" aria-label="Pull">ollama pull qwen2.5</div>
+        <div class="code" aria-label="Run" style="margin-top:6px">ollama run qwen2.5</div>
+        <p class="note">For best latency, keep the model on an SSD and try smaller quantizations.</p>
+      </article>
+
+      <article class="card" aria-labelledby="variants">
+        <h2 id="variants">Variants & hardware</h2>
+        <p>Smaller Qwen 2.5 variants run well on most PCs (8–16 GB RAM). Larger variants benefit from more RAM/VRAM and GPU acceleration.</p>
+        <p class="note">See <a href="/gpu-acceleration.html">GPU Acceleration</a> for CUDA/DirectML setup and <a href="/benchmarks.html">Benchmarks</a> for speed guidance.</p>
+      </article>
     </section>
 
-    <section class="card" aria-labelledby="cookies">
-      <h2 id="cookies">Cookies and local storage</h2>
-      <p>We use your browser’s local storage to remember your cookie preference (<code>cookieConsent</code>). This avoids asking you on every visit. We do not set marketing cookies.</p>
-      <p>You can change your choice anytime using “Cookie preferences” in the footer.</p>
+    <section class="grid" aria-label="Use cases and tips" style="margin-top:16px">
+      <article class="card" aria-labelledby="uses">
+        <h2 id="uses">Great for</h2>
+        <p>• Multilingual chat and translation scenarios</p>
+        <p>• Reasoning and instruction following</p>
+        <p>• Summarization, Q&A, and drafting</p>
+        <p>• Private, on‑device assistants</p>
+      </article>
+      <article class="card" aria-labelledby="tips">
+        <h2 id="tips">Tips</h2>
+        <p>• Set the system prompt to establish role and tone (“You are a concise assistant…”).</p>
+        <p>• Use few‑shot examples for structured tasks (e.g., format conversions).</p>
+        <p>• Prefer smaller quantizations on limited hardware; upscale if you need more quality.</p>
+        <p>• Benchmark to find the best trade‑off for your machine.</p>
+      </article>
     </section>
 
-    <section class="card" aria-labelledby="analytics">
-      <h2 id="analytics">Analytics</h2>
-      <p>We use Google Analytics 4 (GA4) to understand how the site is used, but it is loaded only after you click “Accept”. Until then, no analytics scripts are loaded.</p>
-      <ul>
-        <li>What we track: page views, and simple events like clicks on the download button.</li>
-        <li>What we do not track: we don’t set user IDs, and we don’t collect text you type on the site.</li>
-        <li>You can revoke consent anytime via “Cookie preferences”.</li>
-      </ul>
-      <p class="note">Your browser or extensions can also block analytics globally if you prefer.</p>
+    <section style="text-align:center; margin-top:12px">
+      <a class="btn" href="https://ollama.com/download/windows" target="_blank" rel="noopener noreferrer" aria-label="Download Ollama for Windows (official site)">⬇️ Download Ollama for Windows</a>
     </section>
 
-    <section class="card" aria-labelledby="third">
-      <h2 id="third">Third‑party links</h2>
-      <p>This site links to third‑party websites (e.g., the official Ollama download page). We are not responsible for their content or privacy practices. Review their policies when visiting.</p>
-    </section>
-
-    <section class="card" aria-labelledby="retention">
-      <h2 id="retention">Data retention</h2>
-      <p>We do not store personal data on our servers. Aggregated analytics data, if collected after your consent, is processed by Google under their policies. You can clear your local storage to erase your consent choice.</p>
-    </section>
-
-    <section class="card" aria-labelledby="rights">
-      <h2 id="rights">Your choices</h2>
-      <ul>
-        <li>Accept or reject analytics in the cookie banner.</li>
-        <li>Change your preference anytime via “Cookie preferences” in the footer.</li>
-        <li>Use browser settings or extensions to block analytics scripts.</li>
-        <li>Contact us if you have questions (see below).</li>
-      </ul>
-    </section>
-
-    <section class="card" aria-labelledby="contact">
-      <h2 id="contact">Contact</h2>
-      <p>Questions about this policy? Please reach out via our site repository or issue tracker associated with this project.</p>
-    </section>
-
-    <section class="card" aria-labelledby="changes">
-      <h2 id="changes">Changes to this policy</h2>
-      <p>We may update this policy to reflect improvements or legal requirements. We’ll update the “Last updated” date in the footer below.</p>
-    </section>
-
-    <p class="note">For guidance on running fully offline, see <a href="/privacy-offline.html">Privacy & Offline</a>.</p>
+    <p class="note" style="text-align:center">Community‑driven guide. Not affiliated with the official Ollama project.</p>
   </main>
 
   <footer>
     <div class="container">
       <div class="footer-links">
-        <a href="/privacy.html" aria-current="page">Privacy Policy</a>
+        <a href="/privacy.html">Privacy Policy</a>
         <a href="/terms.html">Terms of Service</a>
         <a href="/sitemap.xml">Sitemap</a>
         <a href="#" id="open-cookie-preferences">Cookie preferences</a>

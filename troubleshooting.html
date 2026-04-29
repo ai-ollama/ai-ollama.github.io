@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+  <meta name="robots" content="index,follow" />
+  <title>Troubleshooting Ollama on Windows — Fix Common Issues | AI Ollama Helper</title>
+  <meta name="description" content="Diagnose and fix Ollama issues on Windows: service and port checks, CLI not found, model download problems, GPU/DirectML tips, and performance fixes." />
+  <link rel="canonical" href="https://ai-ollama.github.io/troubleshooting.html" />
+  <meta name="theme-color" content="#0a67ff" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="Troubleshooting Ollama on Windows — Fix Common Issues" />
+  <meta property="og:description" content="Quick diagnostics and proven fixes for Ollama on Windows: port 11434, downloads, GPU, performance, firewall." />
+  <meta property="og:image" content="https://ai-ollama.github.io/ollama-og-image.png" />
+  <meta property="og:url" content="https://ai-ollama.github.io/troubleshooting.html" />
+  <meta property="og:site_name" content="AI Ollama Helper" />
+  <meta property="og:locale" content="en_US" />
+  <meta property="og:updated_time" content="2026-04-29T17:04:30Z" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Troubleshooting Ollama on Windows — Fix Common Issues" />
+  <meta name="twitter:description" content="Quick diagnostics and proven fixes for Ollama on Windows: port 11434, downloads, GPU, performance, firewall." />
+  <meta name="twitter:image" content="https://ai-ollama.github.io/ollama-og-image.png" />
+
+  <!-- Schema.org: Breadcrumbs -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {"@type": "ListItem", "position": 1, "name": "Download", "item": "https://ai-ollama.github.io/"},
+      {"@type": "ListItem", "position": 2, "name": "Troubleshooting", "item": "https://ai-ollama.github.io/troubleshooting.html"}
+    ]
+  }
+  </script>
+
+  <!-- Schema.org: WebPage (Last updated) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "Troubleshooting Ollama on Windows — Fix Common Issues",
+    "url": "https://ai-ollama.github.io/troubleshooting.html",
+    "datePublished": "2026-04-29",
+    "dateModified": "2026-04-29"
+  }
+  </script>
+
+  <!-- Schema.org: FAQPage -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Why does 'ollama' say 'command not found' or 'is not recognized'?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Open a new terminal window after installation so PATH refreshes. If it still fails, reboot or reinstall Ollama. Ensure the installer completed without errors."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can't connect to http://localhost:11434 — how to fix?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Check that Ollama is running and port 11434 is free. Allow local connections in Windows Firewall. If the port is in use by another app, stop that app or change its port."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Model download is slow or stuck — what can I do?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Retry in a new terminal, check your internet connection and free disk space, and temporarily pause antivirus if it scans large files. You can also try at a later time."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Out of memory or GPU errors?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Use smaller models or lower quantizations, close GPU‑heavy apps, and ensure drivers are up to date. CPU mode may work for smaller models if GPU VRAM is limited."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How do I remove or clean a model?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Use the Ollama CLI to manage models. You can list, remove, and re‑pull as needed. This helps free disk space and resolve corrupt downloads."
+        }
+      }
+    ]
+  }
+  </script>
+
+  <!-- Favicons -->
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+  <link rel="manifest" href="/site.webmanifest" />
+  <link rel="shortcut icon" href="/favicon.ico" />
+
+  <style>
+    :root{ --accent:#0a67ff; --bg:#f6f8fb; --text:#1f2937; --muted:#556277; --card:#fff; --border:#e5e8ee; --code:#0f172a; }
+    *{ box-sizing:border-box }
+    html,body{ margin:0; padding:0; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; color:var(--text); background:var(--bg); line-height:1.6 }
+
+    .skip-link{ position:absolute; left:-9999px; top:auto; width:1px; height:1px; overflow:hidden }
+    .skip-link:focus{ position:static; width:auto; height:auto; padding:8px 12px; background:var(--accent); color:#fff; z-index:9999 }
+
+    .container{ max-width:1100px; margin:0 auto; padding:0 20px }
+    header{ position:sticky; top:0; background:var(--card); border-bottom:1px solid var(--border); z-index:40 }
+    .header-inner{ display:flex; align-items:center; justify-content:space-between; padding:14px 0 }
+    .brand{ display:flex; align-items:center; gap:12px; text-decoration:none; color:inherit }
+    .brand-logo{ width:40px; height:40px; border-radius:10px; background:var(--accent); display:grid; place-items:center; color:#fff; font-weight:900; letter-spacing:.5px }
+    .brand-title{ font-weight:800 }
+    .brand-sub{ font-size:12px; color:var(--muted) }
+
+    nav[aria-label="Primary"] ul{ list-style:none; margin:0; padding:0; display:flex; gap:14px; flex-wrap:wrap }
+    nav[aria-label="Primary"] a{ color:#334155; text-decoration:none; font-weight:700; padding:8px 10px; border-radius:10px }
+    nav[aria-label="Primary"] a:hover{ background:#eef4ff; color:var(--accent) }
+
+    .hero{ padding:44px 0 18px; text-align:center }
+    .hero h1{ font-size:36px; line-height:1.15; margin:0 0 8px; color:var(--accent); font-weight:900 }
+    .subtitle{ font-size:18px; color:var(--muted); max-width:780px; margin:0 auto 12px }
+    .cta-row{ display:flex; gap:10px; justify-content:center; flex-wrap:wrap; margin-top:8px }
+    .btn{ display:inline-flex; align-items:center; gap:8px; padding:12px 20px; font-weight:800; color:#fff; background:var(--accent); border-radius:10px; text-decoration:none; box-shadow:0 10px 18px -10px rgba(10,103,255,.5); transition:.18s; font-size:15px }
+    .btn:hover{ transform:translateY(-1px); box-shadow:0 16px 26px -12px rgba(10,103,255,.6) }
+    .btn-secondary{ background:#334155 }
+
+    .grid{ display:grid; grid-template-columns: 2fr 1fr; gap:16px }
+    @media (max-width:960px){ .grid{ grid-template-columns: 1fr } }
+
+    .card{ background:var(--card); border:1px solid var(--border); border-radius:16px; padding:18px; box-shadow:0 1px 3px rgba(0,0,0,.06) }
+    .card h2{ font-size:20px; margin:0 0 6px }
+    .card p{ color:var(--muted); margin:0 0 8px }
+    .code{ background:var(--code); color:#e2e8f0; padding:12px 14px; border-radius:10px; font-family:SFMono-Regular,Consolas,Menlo,monospace; font-size:13px; overflow-x:auto; border-left:4px solid var(--accent); margin-top:6px }
+
+    .note{ color:#64748b; font-size:14px; margin-top:10px; text-align:center }
+
+    footer{ margin-top:36px; background:var(--card); border-top:1px solid var(--border); padding:26px 0; color:#6b7280; font-size:14px }
+    .footer-links{ display:flex; gap:16px; justify-content:center; flex-wrap:wrap; margin-bottom:8px }
+    .footer-links a{ color:#6b7280; text-decoration:none }
+    .footer-links a:hover{ text-decoration:underline }
+
+    /* Cookie banner */
+    .cookie-banner{ position:fixed; inset-inline:0; bottom:0; background:rgba(15,23,42,.96); color:#fff; display:none; gap:14px; align-items:flex-start; padding:16px 18px; z-index:1000; box-shadow:0 -8px 24px rgba(0,0,0,.35) }
+    .cookie-banner.show{ display:flex }
+    .cookie-banner p{ margin:0; flex:1; line-height:1.5 }
+    .cookie-banner a{ color:#a0c4ff; text-decoration:underline }
+    .cookie-actions{ display:flex; gap:10px; flex-wrap:wrap }
+    .cookie-btn{ border:none; padding:10px 16px; border-radius:8px; cursor:pointer; font-weight:700 }
+    .cookie-accept{ background:var(--accent); color:#fff }
+    .cookie-reject{ background:#334155; color:#e2e8f0 }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header>
+    <div class="container header-inner">
+      <a href="/" class="brand" aria-label="AI Ollama Helper home">
+        <div class="brand-logo" aria-hidden="true">AI</div>
+        <div>
+          <div class="brand-title">AI Ollama Helper</div>
+          <div class="brand-sub">Local LLM Hub</div>
+        </div>
+      </a>
+      <nav aria-label="Primary">
+        <ul>
+          <li><a href="/">Download</a></li>
+          <li><a href="/install-windows.html">Install</a></li>
+          <li><a href="/models.html">Models</a></li>
+          <li><a href="/python.html">Python</a></li>
+          <li><a href="/faq.html">FAQ</a></li>
+          <li><a href="/update.html">Update</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" class="container">
+    <section class="hero" aria-labelledby="title">
+      <h1 id="title">Troubleshooting</h1>
+      <p class="subtitle">Quick diagnostics and proven fixes to get Ollama working on Windows.</p>
+      <div class="cta-row">
+        <a class="btn" href="https://ollama.com/download/windows" target="_blank" rel="noopener noreferrer" aria-label="Download Ollama for Windows (official site)">⬇️ Download Ollama</a>
+        <a class="btn btn-secondary" href="/install-windows.html">Install Guide</a>
+      </div>
+    </section>
+
+    <section class="grid" aria-label="Diagnostics and fixes">
+      <div>
+        <article class="card" aria-labelledby="diag">
+          <h2 id="diag">Quick diagnostics</h2>
+          <p>1) Is the CLI available?</p>
+          <div class="code">ollama --version</div>
+          <p>2) Is the local API reachable?</p>
+          <div class="code">http://localhost:11434/api/tags</div>
+          <p>3) Is the port in use?</p>
+          <div class="code">netstat -ano | findstr 11434</div>
+          <p>4) Can you list models?</p>
+          <div class="code">ollama list</div>
+          <p>5) Test a minimal run:</p>
+          <div class="code">ollama run llama3</div>
+          <p class="note">If you use PowerShell, you can also try: Test-NetConnection -ComputerName localhost -Port 11434</p>
+        </article>
+
+        <article class="card" aria-labelledby="common">
+          <h2 id="common">Common issues & fixes</h2>
+          <p><strong>CLI not recognized</strong> — Open a new terminal after installation so PATH refreshes. Reboot if needed; reinstall if the issue persists.</p>
+          <p><strong>Port 11434 busy</strong> — Find the PID via <em>netstat</em>, stop the conflicting app, then retry. Allow local connections in Windows Firewall when prompted.</p>
+          <p><strong>Download stuck/slow</strong> — Check internet and disk space, pause heavy downloads/scans, retry later. Ensure antivirus isn’t scanning large model files continuously.</p>
+          <p><strong>Out of memory (RAM/VRAM)</strong> — Try smaller models or lower quantizations; close GPU‑heavy apps; ensure drivers are up to date. CPU mode can work for small models.</p>
+          <p><strong>Performance is poor</strong> — Enable GPU acceleration (see <a href="/gpu-acceleration.html">CUDA/DirectML</a>), keep models on SSD, and use smaller quantizations.</p>
+          <p><strong>Firewall/antivirus blocks</strong> — Allow local access for Ollama; add an exception if a corporate policy blocks localhost connections.</p>
+        </article>
+
+        <article class="card" aria-labelledby="cleanup">
+          <h2 id="cleanup">Manage and clean models</h2>
+          <p>List installed models:</p>
+          <div class="code">ollama list</div>
+          <p>Remove a model to free space, then re‑pull if needed:</p>
+          <div class="code">ollama rm MODEL_NAME
+ollama pull MODEL_NAME</div>
+          <p class="note">Keeping only the models you use helps avoid disk and memory pressure.</p>
+        </article>
+      </div>
+
+      <aside class="card" aria-labelledby="links">
+        <h2 id="links">Helpful links</h2>
+        <p>• <a href="/gpu-acceleration.html">GPU Acceleration (CUDA/DirectML)</a></p>
+        <p>• <a href="/update.html">Update Ollama & models</a></p>
+        <p>• <a href="/uninstall.html">Uninstall & cleanup</a></p>
+        <p>• <a href="/faq.html">Extended FAQ</a></p>
+        <p>• <a href="/benchmarks.html">Benchmarks & best practices</a></p>
+      </aside>
+    </section>
+
+    <section style="text-align:center; margin-top:12px">
+      <a class="btn" href="https://ollama.com/download/windows" target="_blank" rel="noopener noreferrer" aria-label="Download Ollama for Windows (official site)">⬇️ Download Ollama for Windows</a>
+    </section>
+
+    <p class="note">Community‑driven guide. Not affiliated with the official Ollama project.</p>
+  </main>
+
+  <footer>
+    <div class="container">
+      <div class="footer-links">
+        <a href="/privacy.html">Privacy Policy</a>
+        <a href="/terms.html">Terms of Service</a>
+        <a href="/sitemap.xml">Sitemap</a>
+        <a href="#" id="open-cookie-preferences">Cookie preferences</a>
+      </div>
+      <div style="text-align:center;">© <span id="year"></span> AI Ollama Helper Project • Community resource</div>
+      <div class="last-updated" style="margin-top:6px; font-size:13px; color:#64748b; text-align:center;">Last updated: April 29, 2026</div>
+    </div>
+  </footer>
+
+  <!-- Cookie Consent -->
+  <div id="cookie-banner" class="cookie-banner" role="dialog" aria-live="polite" aria-label="Cookie consent banner">
+    <p>
+      We use basic analytics to improve this site. You can accept or reject optional cookies. Learn more in our <a href="/privacy.html">Privacy Policy</a>.
+    </p>
+    <div class="cookie-actions">
+      <button class="cookie-btn cookie-reject" id="cookie-reject">Reject</button>
+      <button class="cookie-btn cookie-accept" id="cookie-accept">Accept</button>
+    </div>
+  </div>
+
+  <script>
+    // Footer year
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Consent-gated GA loader (consistent with other pages)
+    const CONSENT_KEY='cookieConsent';
+    function loadGA(){ if(window.__gaLoaded) return; window.__gaLoaded=true; const s=document.createElement('script'); s.async=true; s.src='https://www.googletagmanager.com/gtag/js?id=G-JZTGSFRZBD'; document.head.appendChild(s); window.dataLayer=window.dataLayer||[]; function gtag(){dataLayer.push(arguments)} window.gtag=gtag; gtag('js', new Date()); gtag('config','G-JZTGSFRZBD'); }
+    function showBanner(){document.getElementById('cookie-banner').classList.add('show')} function hideBanner(){document.getElementById('cookie-banner').classList.remove('show')}
+    (function(){ const saved=localStorage.getItem(CONSENT_KEY); if(!saved){ setTimeout(showBanner,600); } else if(saved==='accepted'){ loadGA(); }
+      document.getElementById('cookie-accept').addEventListener('click',function(){ localStorage.setItem(CONSENT_KEY,'accepted'); hideBanner(); loadGA(); });
+      document.getElementById('cookie-reject').addEventListener('click',function(){ localStorage.setItem(CONSENT_KEY,'rejected'); hideBanner(); });
+      document.getElementById('open-cookie-preferences').addEventListener('click',function(e){ e.preventDefault(); showBanner(); });
+    })();
+  </script>
+</body>
+</html>

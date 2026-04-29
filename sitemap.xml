@@ -2,18 +2,67 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
    <url>
       <loc>https://ai-ollama.github.io/</loc>
-      <lastmod>2026-03-13</lastmod>
-      <priority>1.00</priority>
+      <lastmod>2026-04-29T17:04:30Z</lastmod>
+   </url>
+   <url>
+      <loc>https://ai-ollama.github.io/gpu-acceleration.html</loc>
+      <lastmod>2026-04-29T17:04:30Z</lastmod>
+   </url>
+   <url>
+      <loc>https://ai-ollama.github.io/faq.html</loc>
+      <lastmod>2026-04-29T17:04:30Z</lastmod>
+   </url>
+   <url>
+      <loc>https://ai-ollama.github.io/benchmarks.html</loc>
+      <lastmod>2026-04-29T17:04:30Z</lastmod>
+   </url>
+   <url>
+      <loc>https://ai-ollama.github.io/update.html</loc>
+      <lastmod>2026-04-29T17:04:30Z</lastmod>
+   </url>
+   <url>
+      <loc>https://ai-ollama.github.io/uninstall.html</loc>
+      <lastmod>2026-04-29T17:04:30Z</lastmod>
+   </url>
+   <url>
+      <loc>https://ai-ollama.github.io/troubleshooting.html</loc>
+      <lastmod>2026-04-29T17:04:30Z</lastmod>
+   </url>
+   <url>
+      <loc>https://ai-ollama.github.io/qwen-2-5.html</loc>
+      <lastmod>2026-04-29T17:04:30Z</lastmod>
+   </url>
+   <url>
+      <loc>https://ai-ollama.github.io/python.html</loc>
+      <lastmod>2026-04-29T17:04:30Z</lastmod>
+   </url>
+   <url>
+      <loc>https://ai-ollama.github.io/privacy-offline.html</loc>
+      <lastmod>2026-04-29T17:04:30Z</lastmod>
    </url>
    <url>
       <loc>https://ai-ollama.github.io/privacy.html</loc>
-      <lastmod>2026-03-13</lastmod>
-      <priority>0.80</priority>
+      <lastmod>2026-04-29T17:04:30Z</lastmod>
    </url>
    <url>
-      <loc>https://ai-ollama.github.io/terms.html</loc>
-      <lastmod>2026-03-13</lastmod>
-      <priority>0.80</priority>
+      <loc>https://ai-ollama.github.io/phi-4-gemma-2.html</loc>
+      <lastmod>2026-04-29T17:04:30Z</lastmod>
+   </url>
+   <url>
+      <loc>https://ai-ollama.github.io/models.html</loc>
+      <lastmod>2026-04-29T17:04:30Z</lastmod>
+   </url>
+   <url>
+      <loc>https://ai-ollama.github.io/mistral.html</loc>
+      <lastmod>2026-04-29T17:04:30Z</lastmod>
+   </url>
+   <url>
+      <loc>https://ai-ollama.github.io/llama-3.html</loc>
+      <lastmod>2026-04-29T17:04:30Z</lastmod>
+   </url>
+   <url>
+      <loc>https://ai-ollama.github.io/install-windows.html</loc>
+      <lastmod>2026-04-29T17:04:30Z</lastmod>
    </url>
 </urlset>
 
