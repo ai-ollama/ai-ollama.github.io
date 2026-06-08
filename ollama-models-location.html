@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Where Does Ollama Store Models on Windows? Location & Move Guide</title>
+  <meta name="description" content="Ollama stores models in C:\Users\YourName\.ollama\models by default. Learn how to find the folder, check disk usage, move models to another drive with OLLAMA_MODELS, and delete models.">
+  <link rel="canonical" href="https://ai-ollama.github.io/ollama-models-location.html">
+  <meta name="last-modified" content="2026-06-08">
+  <meta property="og:title" content="Where Does Ollama Store Models on Windows? Location & Move Guide">
+  <meta property="og:description" content="Ollama stores models in C:\Users\YourName\.ollama\models by default. Learn how to find the folder, check disk usage, move models to another drive with OLLAMA_MODELS, and delete models.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://ai-ollama.github.io/ollama-models-location.html">
+  <meta property="og:image" content="https://ai-ollama.github.io/ollama-og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="shortcut icon" href="/favicon.ico">
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<nav class="site-nav"><div class="wrap"><div class="nav-inner">
+  <a href="/" class="nav-logo"><div class="nav-logo-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M4.22 4.22l2.12 2.12M17.66 17.66l2.12 2.12M2 12h3M19 12h3M4.22 19.78l2.12-2.12M17.66 6.34l2.12-2.12"/></svg></div><span class="nav-logo-name">AI Ollama</span></a>
+  <div class="nav-links">
+    <a href="/" id="nl-home">Download</a>
+    <a href="/install-windows.html" id="nl-install">Install</a>
+    <a href="/gpu-acceleration.html" id="nl-gpu">GPU</a>
+    <a href="/models.html" id="nl-models">Models</a>
+    <a href="/faq.html" id="nl-faq">FAQ</a>
+    <a href="/troubleshooting.html" id="nl-ts">Help</a>
+  </div>
+  <a href="/" class="nav-cta"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Download</a>
+</div></div></nav>
+<div class="page-hero"><div class="wrap">
+  <nav class="breadcrumb"><a href="/">ai-ollama.github.io</a> <span>/</span> <span>ollama-models-location</span></nav>
+  <span class="page-tag">Guide</span>
+  <h1>Where does Ollama store models on Windows?</h1>
+  <p class="page-lead">Ollama models are stored in <code>C:\Users\YourName\.ollama\models</code> by default. Each model takes 1&ndash;40 GB. This guide covers finding the folder, checking total size, moving models to another drive with <code>OLLAMA_MODELS</code>, and deleting models.</p>
+  
+</div></div>
+<div class="wrap"><div class="content-layout">
+  <main><div class="section" aria-labelledby="where-h2"><span class="section-label">Default location</span><h2 id="where-h2">Where does Ollama store models on Windows?</h2>
+<p>By default, Ollama stores all downloaded models in your Windows user profile:</p>
+<div class="term"><div class="term-bar"><div class="term-dot" style="background:#ff5f56"></div><div class="term-dot" style="background:#ffbd2e"></div><div class="term-dot" style="background:#27c93f"></div><span class="term-label">cmd.exe</span></div><div class="term-body"><div><span class="t-cm"># Default models folder:</span></div><div><span class="t-v">C:\Users\YourName\.ollama\models</span></div><div></div><div><span class="t-cm"># Open the folder in File Explorer:</span></div><div><span class="t-p">C:\&gt;</span> <span class="t-c">explorer "%USERPROFILE%\.ollama\models"</span></div><div></div><div><span class="t-cm"># Check total size (PowerShell):</span></div><div><span class="t-p">PS&gt;</span> <span class="t-c">(Get-ChildItem $env:USERPROFILE\.ollama\models -Recurse | Measure-Object -Property Length -Sum).Sum / 1GB</span></div><div><span class="t-v">9.4</span></div></div></div>
+<p>The <code>.ollama</code> folder structure contains:</p>
+<ul>
+<li><code>.ollama\models\manifests</code> &mdash; model metadata and version info</li>
+<li><code>.ollama\models\blobs</code> &mdash; the actual model weight files (the large files)</li>
+</ul>
+</div>
+<div class="section" aria-labelledby="move-h2"><span class="section-label">Move models</span><h2 id="move-h2">Move models to a different drive</h2>
+<p>If your system drive (C:) is running low on space, you can move the models folder to another drive using the <code>OLLAMA_MODELS</code> environment variable.</p>
+<ul class="steps">
+<li class="step"><div class="step-n">1</div><div><h3>Quit Ollama</h3><p>Right-click the Ollama tray icon &rarr; <strong>Quit Ollama</strong>.</p></div></li>
+<li class="step"><div class="step-n">2</div><div><h3>Copy the existing models folder</h3>
+<div class="term"><div class="term-bar"><div class="term-dot" style="background:#ff5f56"></div><div class="term-dot" style="background:#ffbd2e"></div><div class="term-dot" style="background:#27c93f"></div><span class="term-label">PowerShell</span></div><div class="term-body"><div><span class="t-cm"># Copy to D: drive (adjust path as needed):</span></div><div><span class="t-p">PS&gt;</span> <span class="t-c">Copy-Item "$env:USERPROFILE\.ollama\models" -Destination "D:\OllamaModels" -Recurse</span></div></div></div>
+</div></li>
+<li class="step"><div class="step-n">3</div><div><h3>Set the OLLAMA_MODELS environment variable</h3><p>Settings &rarr; System &rarr; Advanced system settings &rarr; Environment Variables &rarr; New user variable:</p><ul><li><strong>Name:</strong> <code>OLLAMA_MODELS</code></li><li><strong>Value:</strong> <code>D:\OllamaModels</code></li></ul><p>Or via PowerShell (permanent):</p>
+<div class="term"><div class="term-bar"><div class="term-dot" style="background:#ff5f56"></div><div class="term-dot" style="background:#ffbd2e"></div><div class="term-dot" style="background:#27c93f"></div><span class="term-label">PowerShell</span></div><div class="term-body"><div><span class="t-p">PS&gt;</span> <span class="t-c">[Environment]::SetEnvironmentVariable("OLLAMA_MODELS", "D:\OllamaModels", "User")</span></div></div></div>
+</div></li>
+<li class="step"><div class="step-n">4</div><div><h3>Restart Ollama and verify</h3>
+<div class="term"><div class="term-bar"><div class="term-dot" style="background:#ff5f56"></div><div class="term-dot" style="background:#ffbd2e"></div><div class="term-dot" style="background:#27c93f"></div><span class="term-label">cmd.exe — new window</span></div><div class="term-body"><div><span class="t-p">C:\&gt;</span> <span class="t-c">ollama list</span></div><div><span class="t-v">llama3:latest   4.7 GB</span></div><div><span class="t-cm"># Models are now loaded from D:\OllamaModels</span></div></div></div>
+</div></li>
+<li class="step"><div class="step-n">5</div><div><h3>Delete the old folder to free space</h3>
+<div class="term"><div class="term-bar"><div class="term-dot" style="background:#ff5f56"></div><div class="term-dot" style="background:#ffbd2e"></div><div class="term-dot" style="background:#27c93f"></div><span class="term-label">PowerShell</span></div><div class="term-body"><div><span class="t-p">PS&gt;</span> <span class="t-c">Remove-Item "$env:USERPROFILE\.ollama\models" -Recurse -Force</span></div><div><span class="t-cm"># This frees the disk space on C:</span></div></div></div>
+<div class="callout callout-warn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg><span>Only delete the old folder after confirming models load correctly from the new location.</span></div>
+</div></li>
+</ul>
+</div>
+<div class="section" aria-labelledby="manage-h2"><span class="section-label">Manage models</span><h2 id="manage-h2">List, remove and manage model files</h2>
+<div class="term"><div class="term-bar"><div class="term-dot" style="background:#ff5f56"></div><div class="term-dot" style="background:#ffbd2e"></div><div class="term-dot" style="background:#27c93f"></div><span class="term-label">cmd.exe</span></div><div class="term-body"><div><span class="t-cm"># List all installed models with size:</span></div><div><span class="t-p">C:\&gt;</span> <span class="t-c">ollama list</span></div><div><span class="t-v">NAME              SIZE   MODIFIED</span></div><div><span class="t-v">llama3:latest     4.7 GB  3 days ago</span></div><div><span class="t-v">mistral:latest    4.1 GB  1 week ago</span></div><div><span class="t-v">qwen2.5:latest    4.4 GB  2 days ago</span></div><div></div><div><span class="t-cm"># Remove a model to free space:</span></div><div><span class="t-p">C:\&gt;</span> <span class="t-c">ollama rm mistral</span></div><div><span class="t-ok">deleted 'mistral'</span></div><div></div><div><span class="t-cm"># Show currently running models:</span></div><div><span class="t-p">C:\&gt;</span> <span class="t-c">ollama ps</span></div></div></div>
+</div>
+<div class="section" aria-labelledby="faq-h2"><span class="section-label">FAQ</span><h2 id="faq-h2">Model location questions</h2><div class="faq">
+<div class="faq-item"><details><summary>Can I copy a model from one PC to another?</summary><div class="faq-ans">Yes. Copy the <code>.ollama\models</code> folder (or just the specific model blobs) from one machine to another. Set <code>OLLAMA_MODELS</code> to point to the copied location if needed, or copy into the default path. Then run <code>ollama list</code> to verify the model is detected.</div></details></div>
+<div class="faq-item"><details><summary>Why does OLLAMA_MODELS not seem to work?</summary><div class="faq-ans">Ensure you set the variable and then opened a <strong>new</strong> terminal and restarted Ollama (quit from tray, reopen). Environment variable changes require a new process to take effect. Verify with <code>echo %OLLAMA_MODELS%</code> in the new terminal.</div></details></div>
+<div class="faq-item"><details><summary>Does ollama rm actually delete the files?</summary><div class="faq-ans">Yes. <code>ollama rm modelname</code> removes the model manifest and its associated blob files from the models folder. Disk space is freed immediately. Run <code>ollama list</code> to confirm the model no longer appears.</div></details></div>
+<div class="faq-item"><details><summary>How do I find which file belongs to which model?</summary><div class="faq-ans">The blob files in <code>.ollama\models\blobs</code> have cryptographic hash names and are not human-readable. Use <code>ollama list</code> to see model names and sizes, and <code>ollama rm</code> to remove a specific model rather than deleting blob files manually.</div></details></div>
+</div></div>
+<div class="cta-banner"><div><h2>Running out of disk space?</h2><p>Remove unused models or move the models folder to a larger drive.</p></div><a href="/uninstall.html" class="btn-white"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Uninstall guide</a></div>
+<div style="margin-bottom:44px"><span class="section-label">Related guides</span><div class="rel-grid"><a href="/uninstall.html" class="rel-card"><div class="rel-title">Uninstall &rarr;</div><div class="rel-sub">delete models</div></a><a href="/models.html" class="rel-card"><div class="rel-title">Models Hub &rarr;</div><div class="rel-sub">which models to keep</div></a><a href="/troubleshooting.html" class="rel-card"><div class="rel-title">Troubleshooting &rarr;</div><div class="rel-sub">other issues</div></a></div></div></main>
+  <aside class="content-sidebar"><div class="sb-card"><div class="sb-card-title">Install & setup</div><ul class="sb-links"><li><a href="/">Download Ollama</a></li><li><a href="/install-windows.html">Install on Windows</a></li><li><a href="/update.html">Update Ollama</a></li><li><a href="/uninstall.html">Uninstall</a></li></ul></div><div class="sb-card"><div class="sb-card-title">Features</div><ul class="sb-links"><li><a href="/gpu-acceleration.html">GPU Acceleration</a></li><li><a href="/models.html">Models Hub</a></li><li><a href="/privacy-offline.html">Offline & Privacy</a></li><li><a href="/benchmarks.html">Benchmarks</a></li><li><a href="/python.html">Python API</a></li></ul></div><div class="sb-card"><div class="sb-card-title">Troubleshoot</div><ul class="sb-links"><li><a href="/troubleshooting.html">Troubleshooting</a></li><li><a href="/ollama-not-recognized.html">Not recognized</a></li><li><a href="/ollama-offline.html">Is Ollama offline?</a></li><li><a href="/ollama-port-11434.html">Port 11434</a></li><li><a href="/ollama-models-location.html"style="color:var(--text);font-weight:600">Models location</a></li></ul></div><div class="sb-card"><div class="sb-card-title">Models</div><ul class="sb-links"><li><a href="/llama-3.html">Llama 3</a></li><li><a href="/mistral.html">Mistral</a></li><li><a href="/qwen-2-5.html">Qwen 2.5</a></li><li><a href="/phi-4-gemma-2.html">Phi-4 & Gemma 2</a></li><li><a href="/ollama-directml.html">DirectML / AMD</a></li></ul></div></aside>
+</div></div>
+<footer class="site-footer"><div class="wrap">
+  <div class="footer-inner">
+    <div>
+      <div class="footer-logo"><div class="footer-logo-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M4.22 4.22l2.12 2.12M17.66 17.66l2.12 2.12M2 12h3M19 12h3M4.22 19.78l2.12-2.12M17.66 6.34l2.12-2.12"/></svg></div><span class="footer-logo-name">AI Ollama</span></div>
+      <p class="footer-tagline">Unofficial Windows guide for Ollama &mdash; download, install, configure, troubleshoot.</p>
+    </div>
+    <div>
+      <div class="footer-col-title">Install &amp; setup</div>
+      <ul class="footer-links">
+        <li><a href="/">Download Ollama</a></li>
+        <li><a href="/install-windows.html">Install on Windows</a></li>
+        <li><a href="/update.html">Update Ollama</a></li>
+        <li><a href="/uninstall.html">Uninstall</a></li>
+        <li><a href="/install-openssl-windows-server.html">Windows Server</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Features</div>
+      <ul class="footer-links">
+        <li><a href="/gpu-acceleration.html">GPU Acceleration</a></li>
+        <li><a href="/models.html">Models Hub</a></li>
+        <li><a href="/privacy-offline.html">Offline &amp; Privacy</a></li>
+        <li><a href="/benchmarks.html">Benchmarks</a></li>
+        <li><a href="/python.html">Python API</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Help</div>
+      <ul class="footer-links">
+        <li><a href="/troubleshooting.html">Troubleshooting</a></li>
+        <li><a href="/ollama-not-recognized.html">Not recognized fix</a></li>
+        <li><a href="/ollama-offline.html">Is Ollama offline?</a></li>
+        <li><a href="/faq.html">FAQ</a></li>
+        <li><a href="/privacy.html">Privacy policy</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p class="footer-copy">Not affiliated with Ollama or its developers. Unofficial guide site.</p>
+    <p class="footer-legal"><strong>Affiliate disclosure:</strong> Download links may be partner links.</p>
+  </div>
+</div></footer>
+<div class="cookie-bar" id="cookieBar" style="display:none">
+  <p>We use Google Analytics to understand traffic. <a href="/privacy.html">Privacy policy</a></p>
+  <div class="cookie-btns"><button class="cookie-accept" id="cookieAccept">Accept</button><button class="cookie-decline" id="cookieDecline">Decline</button></div>
+</div>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-JZTGSFRZBD"></script>
+<script>
+window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}
+gtag('consent','default',{analytics_storage:'denied',ad_storage:'denied'});
+gtag('js',new Date());gtag('config','G-JZTGSFRZBD',{send_page_view:false});
+function grantGA(){gtag('consent','update',{analytics_storage:'granted'});gtag('event','page_view',{page_location:location.href,page_title:document.title})}
+document.addEventListener('DOMContentLoaded',function(){
+  var bar=document.getElementById('cookieBar');
+  var c=localStorage.getItem('ollama_consent');
+  if(!c){bar.style.display='flex'}else if(c==='1'){grantGA()}
+  document.getElementById('cookieAccept').addEventListener('click',function(){localStorage.setItem('ollama_consent','1');grantGA();bar.style.display='none'});
+  document.getElementById('cookieDecline').addEventListener('click',function(){localStorage.setItem('ollama_consent','0');bar.style.display='none'});
+});
+</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Where does Ollama store models on Windows?","acceptedAnswer":{"@type":"Answer","text":"By default in C:\\Users\\YourName\\.ollama\\models. You can change this by setting the OLLAMA_MODELS environment variable."}},{"@type":"Question","name":"How do I move Ollama models to another drive?","acceptedAnswer":{"@type":"Answer","text":"Copy the .ollama/models folder to the new location, set OLLAMA_MODELS environment variable to that path, restart Ollama, then delete the old folder."}},{"@type":"Question","name":"How do I delete an Ollama model to free disk space?","acceptedAnswer":{"@type":"Answer","text":"Run ollama rm modelname, for example ollama rm llama3. The model files are deleted immediately."}}]}</script>
+<script>var el=document.getElementById('nl-home');if(el)el.classList.add('active');</script>
+</body></html>

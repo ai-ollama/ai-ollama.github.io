@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Ollama AMD GPU DirectML on Windows — Setup, Performance and Tips</title>
+  <meta name="description" content="Enable AMD GPU acceleration for Ollama on Windows using DirectML. Update AMD drivers, verify DirectML is active, performance benchmarks for RX 6000/7000 series, and optimisation tips.">
+  <link rel="canonical" href="https://ai-ollama.github.io/ollama-directml.html">
+  <meta name="last-modified" content="2026-06-08">
+  <meta property="og:title" content="Ollama AMD GPU DirectML on Windows — Setup, Performance and Tips">
+  <meta property="og:description" content="Enable AMD GPU acceleration for Ollama on Windows using DirectML. Update AMD drivers, verify DirectML is active, performance benchmarks for RX 6000/7000 series, and optimisation tips.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://ai-ollama.github.io/ollama-directml.html">
+  <meta property="og:image" content="https://ai-ollama.github.io/ollama-og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="shortcut icon" href="/favicon.ico">
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<nav class="site-nav"><div class="wrap"><div class="nav-inner">
+  <a href="/" class="nav-logo"><div class="nav-logo-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M4.22 4.22l2.12 2.12M17.66 17.66l2.12 2.12M2 12h3M19 12h3M4.22 19.78l2.12-2.12M17.66 6.34l2.12-2.12"/></svg></div><span class="nav-logo-name">AI Ollama</span></a>
+  <div class="nav-links">
+    <a href="/" id="nl-home">Download</a>
+    <a href="/install-windows.html" id="nl-install">Install</a>
+    <a href="/gpu-acceleration.html" id="nl-gpu">GPU</a>
+    <a href="/models.html" id="nl-models">Models</a>
+    <a href="/faq.html" id="nl-faq">FAQ</a>
+    <a href="/troubleshooting.html" id="nl-ts">Help</a>
+  </div>
+  <a href="/" class="nav-cta"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Download</a>
+</div></div></nav>
+<div class="page-hero"><div class="wrap">
+  <nav class="breadcrumb"><a href="/">ai-ollama.github.io</a> <span>/</span> <span>ollama-directml</span></nav>
+  <span class="page-tag">DirectML guide</span>
+  <h1>Ollama AMD GPU &mdash; <em>DirectML setup &amp; performance guide</em></h1>
+  <p class="page-lead">Ollama uses Microsoft DirectML to accelerate inference on AMD Radeon GPUs on Windows. No ROCm needed &mdash; DirectML is built into Windows. This guide covers driver setup, verification, performance expectations and optimisation tips.</p>
+  
+</div></div>
+<div class="wrap"><div class="content-layout">
+  <main><div class="section" aria-labelledby="what-h2"><span class="section-label">What is DirectML?</span><h2 id="what-h2">DirectML &mdash; AMD GPU acceleration for Ollama on Windows</h2>
+<p>Microsoft DirectML is a hardware-accelerated machine learning API built into Windows 10 (version 1903+) and Windows 11. Ollama uses DirectML to run inference on AMD Radeon GPUs on Windows, providing GPU acceleration without needing the ROCm stack that Linux AMD users require.</p>
+<p>DirectML works automatically when you install Ollama on a Windows system with a compatible AMD GPU &mdash; no separate install required. The key requirements are an up-to-date AMD Adrenalin driver and Windows 10 version 1903 or later.</p>
+</div>
+<div class="section" aria-labelledby="verify-h2"><span class="section-label">Verify it is working</span><h2 id="verify-h2">Check DirectML is active</h2>
+<div class="term"><div class="term-bar"><div class="term-dot" style="background:#ff5f56"></div><div class="term-dot" style="background:#ffbd2e"></div><div class="term-dot" style="background:#27c93f"></div><span class="term-label">cmd.exe</span></div><div class="term-body"><div><span class="t-p">C:\&gt;</span> <span class="t-c">ollama run mistral --verbose</span></div><div><span class="t-cm"># After typing a prompt, check stats:</span></div><div><span class="t-ok">gpu layers:  32</span></div><div><span class="t-v">backend:     directml</span></div><div><span class="t-v">eval rate:   28.4 tokens/s</span></div></div></div>
+<p>If <code>gpu layers</code> shows 0 and <code>backend</code> shows <code>cpu</code>, DirectML is not active. Follow the steps below.</p>
+</div>
+<div class="section" aria-labelledby="setup-h2"><span class="section-label">Setup</span><h2 id="setup-h2">Enable DirectML for AMD GPU</h2>
+<ul class="steps">
+<li class="step"><div class="step-n">1</div><div><h3>Update AMD Adrenalin drivers</h3><p>Download and install the latest AMD Adrenalin Edition driver from <a href="https://www.amd.com/support" rel="noopener">amd.com/support</a>. Older drivers have worse DirectML performance. For RX 6000 series and newer, use the latest stable release.</p></div></li>
+<li class="step"><div class="step-n">2</div><div><h3>Verify Windows version</h3><p>DirectML requires Windows 10 version 1903 or later. Press <kbd>Win+R</kbd> &rarr; type <code>winver</code>. On Windows 11 you are already fine.</p></div></li>
+<li class="step"><div class="step-n">3</div><div><h3>Reinstall or restart Ollama</h3><p>If you just updated your AMD driver, quit Ollama from the system tray and restart it. New drivers sometimes require a fresh service start to be detected.</p></div></li>
+<li class="step"><div class="step-n">4</div><div><h3>Run with --verbose to confirm</h3>
+<div class="term"><div class="term-bar"><div class="term-dot" style="background:#ff5f56"></div><div class="term-dot" style="background:#ffbd2e"></div><div class="term-dot" style="background:#27c93f"></div><span class="term-label">cmd.exe</span></div><div class="term-body"><div><span class="t-p">C:\&gt;</span> <span class="t-c">ollama run llama3 --verbose</span></div><div><span class="t-cm"># Type a prompt and check:</span></div><div><span class="t-ok">gpu layers:  32  backend: directml</span></div></div></div>
+</div></li>
+</ul>
+</div>
+<div class="section" aria-labelledby="perf-h2"><span class="section-label">Performance</span><h2 id="perf-h2">Expected DirectML performance on AMD GPUs</h2>
+<div class="tbl-wrap"><table><thead><tr><th>GPU</th><th>VRAM</th><th>Model</th><th>Approx. tokens/s</th></tr></thead><tbody>
+<tr><td>RX 7900 XTX</td><td>24 GB</td><td>Llama 3 8B Q4</td><td>40&ndash;55 t/s</td></tr>
+<tr><td>RX 7800 XT</td><td>16 GB</td><td>Llama 3 8B Q4</td><td>30&ndash;42 t/s</td></tr>
+<tr><td>RX 6700 XT</td><td>12 GB</td><td>Mistral 7B Q4</td><td>20&ndash;32 t/s</td></tr>
+<tr><td>RX 6600</td><td>8 GB</td><td>Mistral 7B Q4</td><td>15&ndash;24 t/s</td></tr>
+</tbody></table></div>
+<div class="callout callout-warn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg><span>AMD DirectML performance is generally 30&ndash;50% lower than equivalent NVIDIA CUDA hardware. This is a limitation of the DirectML backend vs native CUDA optimisations, not a hardware quality issue.</span></div>
+</div>
+<div class="section" aria-labelledby="tips-h2"><span class="section-label">Tips</span><h2 id="tips-h2">Improve DirectML performance</h2><div class="faq">
+<div class="faq-item"><details><summary>Use quantized models to fit in VRAM</summary><div class="faq-ans">AMD GPUs have good VRAM amounts on the RX 6000/7000 series. Use Q4_K_M quantization to maximise how much of the model fits in VRAM: <code>ollama pull llama3:8b-instruct-q4_K_M</code>. If the model overflows VRAM, parts run on CPU which is much slower.</div></details></div>
+<div class="faq-item"><details><summary>Keep AMD drivers up to date</summary><div class="faq-ans">AMD regularly improves DirectML performance in driver updates. Check for new drivers monthly at <a href="https://www.amd.com/support" rel="noopener">amd.com/support</a>. Major performance gains are sometimes delivered via driver updates alone.</div></details></div>
+<div class="faq-item"><details><summary>Close other GPU workloads</summary><div class="faq-ans">Gaming, video encoding and other GPU-accelerated tasks share VRAM with Ollama. Close them before running large models to give Ollama the full VRAM budget.</div></details></div>
+<div class="faq-item"><details><summary>AMD GPU not detected at all</summary><div class="faq-ans">If Ollama shows <code>gpu layers: 0</code> after updating drivers and restarting: (1) confirm your Windows version is 1903+, (2) try a clean Ollama reinstall, (3) check if your GPU appears in Device Manager under Display adapters with no yellow warning icon.</div></details></div>
+</div></div>
+<div class="cta-banner"><div><h2>Want to measure your AMD GPU speed?</h2><p>Run the benchmark to see tokens per second on your hardware.</p></div><a href="/benchmarks.html" class="btn-white"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Benchmarks guide</a></div>
+<div style="margin-bottom:44px"><span class="section-label">Related guides</span><div class="rel-grid"><a href="/gpu-acceleration.html" class="rel-card"><div class="rel-title">GPU Acceleration &rarr;</div><div class="rel-sub">full GPU guide</div></a><a href="/benchmarks.html" class="rel-card"><div class="rel-title">Benchmarks &rarr;</div><div class="rel-sub">measure speed</div></a><a href="/models.html" class="rel-card"><div class="rel-title">Models Hub &rarr;</div><div class="rel-sub">choose a model</div></a></div></div></main>
+  <aside class="content-sidebar"><div class="sb-card"><div class="sb-card-title">Install & setup</div><ul class="sb-links"><li><a href="/">Download Ollama</a></li><li><a href="/install-windows.html">Install on Windows</a></li><li><a href="/update.html">Update Ollama</a></li><li><a href="/uninstall.html">Uninstall</a></li></ul></div><div class="sb-card"><div class="sb-card-title">Features</div><ul class="sb-links"><li><a href="/gpu-acceleration.html">GPU Acceleration</a></li><li><a href="/models.html">Models Hub</a></li><li><a href="/privacy-offline.html">Offline & Privacy</a></li><li><a href="/benchmarks.html">Benchmarks</a></li><li><a href="/python.html">Python API</a></li></ul></div><div class="sb-card"><div class="sb-card-title">Troubleshoot</div><ul class="sb-links"><li><a href="/troubleshooting.html">Troubleshooting</a></li><li><a href="/ollama-not-recognized.html">Not recognized</a></li><li><a href="/ollama-offline.html">Is Ollama offline?</a></li><li><a href="/ollama-port-11434.html">Port 11434</a></li><li><a href="/ollama-models-location.html">Models location</a></li></ul></div><div class="sb-card"><div class="sb-card-title">Models</div><ul class="sb-links"><li><a href="/llama-3.html">Llama 3</a></li><li><a href="/mistral.html">Mistral</a></li><li><a href="/qwen-2-5.html">Qwen 2.5</a></li><li><a href="/phi-4-gemma-2.html">Phi-4 & Gemma 2</a></li><li><a href="/ollama-directml.html"style="color:var(--text);font-weight:600">DirectML / AMD</a></li></ul></div></aside>
+</div></div>
+<footer class="site-footer"><div class="wrap">
+  <div class="footer-inner">
+    <div>
+      <div class="footer-logo"><div class="footer-logo-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M4.22 4.22l2.12 2.12M17.66 17.66l2.12 2.12M2 12h3M19 12h3M4.22 19.78l2.12-2.12M17.66 6.34l2.12-2.12"/></svg></div><span class="footer-logo-name">AI Ollama</span></div>
+      <p class="footer-tagline">Unofficial Windows guide for Ollama &mdash; download, install, configure, troubleshoot.</p>
+    </div>
+    <div>
+      <div class="footer-col-title">Install &amp; setup</div>
+      <ul class="footer-links">
+        <li><a href="/">Download Ollama</a></li>
+        <li><a href="/install-windows.html">Install on Windows</a></li>
+        <li><a href="/update.html">Update Ollama</a></li>
+        <li><a href="/uninstall.html">Uninstall</a></li>
+        <li><a href="/install-openssl-windows-server.html">Windows Server</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Features</div>
+      <ul class="footer-links">
+        <li><a href="/gpu-acceleration.html">GPU Acceleration</a></li>
+        <li><a href="/models.html">Models Hub</a></li>
+        <li><a href="/privacy-offline.html">Offline &amp; Privacy</a></li>
+        <li><a href="/benchmarks.html">Benchmarks</a></li>
+        <li><a href="/python.html">Python API</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Help</div>
+      <ul class="footer-links">
+        <li><a href="/troubleshooting.html">Troubleshooting</a></li>
+        <li><a href="/ollama-not-recognized.html">Not recognized fix</a></li>
+        <li><a href="/ollama-offline.html">Is Ollama offline?</a></li>
+        <li><a href="/faq.html">FAQ</a></li>
+        <li><a href="/privacy.html">Privacy policy</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p class="footer-copy">Not affiliated with Ollama or its developers. Unofficial guide site.</p>
+    <p class="footer-legal"><strong>Affiliate disclosure:</strong> Download links may be partner links.</p>
+  </div>
+</div></footer>
+<div class="cookie-bar" id="cookieBar" style="display:none">
+  <p>We use Google Analytics to understand traffic. <a href="/privacy.html">Privacy policy</a></p>
+  <div class="cookie-btns"><button class="cookie-accept" id="cookieAccept">Accept</button><button class="cookie-decline" id="cookieDecline">Decline</button></div>
+</div>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-JZTGSFRZBD"></script>
+<script>
+window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}
+gtag('consent','default',{analytics_storage:'denied',ad_storage:'denied'});
+gtag('js',new Date());gtag('config','G-JZTGSFRZBD',{send_page_view:false});
+function grantGA(){gtag('consent','update',{analytics_storage:'granted'});gtag('event','page_view',{page_location:location.href,page_title:document.title})}
+document.addEventListener('DOMContentLoaded',function(){
+  var bar=document.getElementById('cookieBar');
+  var c=localStorage.getItem('ollama_consent');
+  if(!c){bar.style.display='flex'}else if(c==='1'){grantGA()}
+  document.getElementById('cookieAccept').addEventListener('click',function(){localStorage.setItem('ollama_consent','1');grantGA();bar.style.display='none'});
+  document.getElementById('cookieDecline').addEventListener('click',function(){localStorage.setItem('ollama_consent','0');bar.style.display='none'});
+});
+</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"HowTo","name":"Enable AMD GPU DirectML for Ollama on Windows","description":"How to enable AMD GPU acceleration for Ollama on Windows using DirectML.","step":[{"@type":"HowToStep","position":1,"name":"Update AMD drivers","text":"Download latest Adrenalin driver from amd.com/support"},{"@type":"HowToStep","position":2,"name":"Restart Ollama","text":"Quit from system tray and reopen"},{"@type":"HowToStep","position":3,"name":"Verify DirectML","text":"ollama run mistral --verbose and check gpu layers and backend: directml"}]}</script>
+<script>var el=document.getElementById('nl-gpu');if(el)el.classList.add('active');</script>
+</body></html>

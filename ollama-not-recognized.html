@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Fix "ollama is not recognized" on Windows — Command Not Found Guide</title>
+  <meta name="description" content="Fix "ollama is not recognized as an internal or external command" on Windows. Restart terminal, add to PATH, diagnose with where ollama. Works for cmd.exe and PowerShell.">
+  <link rel="canonical" href="https://ai-ollama.github.io/ollama-not-recognized.html">
+  <meta name="last-modified" content="2026-06-08">
+  <meta property="og:title" content="Fix "ollama is not recognized" on Windows — Command Not Found Guide">
+  <meta property="og:description" content="Fix "ollama is not recognized as an internal or external command" on Windows. Restart terminal, add to PATH, diagnose with where ollama. Works for cmd.exe and PowerShell.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://ai-ollama.github.io/ollama-not-recognized.html">
+  <meta property="og:image" content="https://ai-ollama.github.io/ollama-og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="shortcut icon" href="/favicon.ico">
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<nav class="site-nav"><div class="wrap"><div class="nav-inner">
+  <a href="/" class="nav-logo"><div class="nav-logo-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M4.22 4.22l2.12 2.12M17.66 17.66l2.12 2.12M2 12h3M19 12h3M4.22 19.78l2.12-2.12M17.66 6.34l2.12-2.12"/></svg></div><span class="nav-logo-name">AI Ollama</span></a>
+  <div class="nav-links">
+    <a href="/" id="nl-home">Download</a>
+    <a href="/install-windows.html" id="nl-install">Install</a>
+    <a href="/gpu-acceleration.html" id="nl-gpu">GPU</a>
+    <a href="/models.html" id="nl-models">Models</a>
+    <a href="/faq.html" id="nl-faq">FAQ</a>
+    <a href="/troubleshooting.html" id="nl-ts">Help</a>
+  </div>
+  <a href="/" class="nav-cta"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Download</a>
+</div></div></nav>
+<div class="page-hero"><div class="wrap">
+  <nav class="breadcrumb"><a href="/">ai-ollama.github.io</a> <span>/</span> <span>ollama-not-recognized</span></nav>
+  <span class="page-tag">Troubleshooting</span>
+  <h1>Fix &ldquo;ollama is not recognized&rdquo; on Windows</h1>
+  <p class="page-lead">The error means Windows cannot find <code>ollama.exe</code> on your PATH. The fix is almost always opening a new terminal window after installing. This guide covers all causes and exact steps to fix each one.</p>
+  
+</div></div>
+<div class="wrap"><div class="content-layout">
+  <main><div class="section" aria-labelledby="error-h2"><span class="section-label">The error</span><h2 id="error-h2">What this error means</h2>
+<p>The full error message is:</p>
+<div class="term"><div class="term-bar"><div class="term-dot" style="background:#ff5f56"></div><div class="term-dot" style="background:#ffbd2e"></div><div class="term-dot" style="background:#27c93f"></div><span class="term-label">cmd.exe</span></div><div class="term-body"><div><span class="t-p">C:\&gt;</span> <span class="t-c">ollama run llama3</span></div><div><span class="t-err">'ollama' is not recognized as an internal or external command,</span></div><div><span class="t-err">operable program or batch file.</span></div></div></div>
+<p>In PowerShell it looks like:</p>
+<div class="term"><div class="term-bar"><div class="term-dot" style="background:#ff5f56"></div><div class="term-dot" style="background:#ffbd2e"></div><div class="term-dot" style="background:#27c93f"></div><span class="term-label">PowerShell</span></div><div class="term-body"><div><span class="t-err">ollama : The term 'ollama' is not recognized as the name of a cmdlet,</span></div><div><span class="t-err">function, script file, or operable program.</span></div></div></div>
+<p>Both mean the same thing: Windows cannot find <code>ollama.exe</code> in any folder on your PATH. This is almost always one of three causes: PATH not updated, terminal not restarted, or Ollama not installed.</p>
+</div>
+<div class="section" aria-labelledby="fix1-h2"><span class="section-label">Fix 1 &mdash; most common</span><h2 id="fix1-h2">Open a new terminal window</h2>
+<p>This is the fix for 80% of cases. When Ollama installs, it adds itself to your PATH &mdash; but that change only applies to <strong>new</strong> terminal sessions. Any terminal that was already open before you installed Ollama will not see it.</p>
+<div class="term"><div class="term-bar"><div class="term-dot" style="background:#ff5f56"></div><div class="term-dot" style="background:#ffbd2e"></div><div class="term-dot" style="background:#27c93f"></div><span class="term-label">cmd.exe — close old window, open new one</span></div><div class="term-body"><div><span class="t-cm"># Close ALL open terminals, then open a fresh one:</span></div><div><span class="t-p">C:\&gt;</span> <span class="t-c">ollama --version</span></div><div><span class="t-v">ollama version 0.6.5</span></div><div><span class="t-ok"># If this works, you are done.</span></div></div></div>
+<div class="callout callout-ok"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>Always open a completely new Command Prompt or PowerShell window after installing Ollama. Do not just open a new tab in an existing window &mdash; open a new application instance.</span></div>
+</div>
+<div class="section" aria-labelledby="diag-h2"><span class="section-label">Diagnose first</span><h2 id="diag-h2">Check what is actually happening</h2>
+<p>Before changing PATH settings, run these checks in a <strong>new</strong> terminal:</p>
+<div class="term"><div class="term-bar"><div class="term-dot" style="background:#ff5f56"></div><div class="term-dot" style="background:#ffbd2e"></div><div class="term-dot" style="background:#27c93f"></div><span class="term-label">cmd.exe — new window</span></div><div class="term-body"><div><span class="t-cm"># Step 1: Is Ollama installed?</span></div><div><span class="t-p">C:\&gt;</span> <span class="t-c">dir "%LOCALAPPDATA%\Programs\Ollama\ollama.exe"</span></div><div><span class="t-v">ollama.exe  ... found</span></div><div></div><div><span class="t-cm"># Step 2: Is it on PATH?</span></div><div><span class="t-p">C:\&gt;</span> <span class="t-c">where ollama</span></div><div><span class="t-v">C:\Users\YourName\AppData\Local\Programs\Ollama\ollama.exe</span></div><div></div><div><span class="t-cm"># Step 3: What does PATH contain?</span></div><div><span class="t-p">C:\&gt;</span> <span class="t-c">echo %PATH%</span></div><div><span class="t-cm"># Look for "Ollama" in the output</span></div></div></div>
+<p>If Step 1 fails: Ollama is not installed &rarr; <a href="/">Download and install</a>.<br>If Step 1 passes but Step 2 fails: PATH is not set &rarr; continue to Fix 2.</p>
+</div>
+<div class="section" aria-labelledby="fix2-h2"><span class="section-label">Fix 2</span><h2 id="fix2-h2">Ollama is installed but not on PATH</h2>
+<p>Ollama installs to <code>%LOCALAPPDATA%\Programs\Ollama</code>. Add this folder to your PATH:</p>
+<h3>GUI method (permanent)</h3>
+<ul>
+<li>Press <kbd>Win+S</kbd> &rarr; search <strong>Environment Variables</strong> &rarr; click <strong>Edit environment variables for your account</strong>.</li>
+<li>Select <strong>Path</strong> &rarr; <strong>Edit</strong> &rarr; <strong>New</strong>.</li>
+<li>Type <code>%LOCALAPPDATA%\Programs\Ollama</code> and click OK on all dialogs.</li>
+<li>Open a <strong>new</strong> terminal and run <code>ollama --version</code>.</li>
+</ul>
+<h3 style="margin-top:14px">Command line method (current session only)</h3>
+<div class="term"><div class="term-bar"><div class="term-dot" style="background:#ff5f56"></div><div class="term-dot" style="background:#ffbd2e"></div><div class="term-dot" style="background:#27c93f"></div><span class="term-label">cmd.exe</span></div><div class="term-body"><div><span class="t-p">C:\&gt;</span> <span class="t-c">set PATH=%PATH%;%LOCALAPPDATA%\Programs\Ollama</span></div><div><span class="t-p">C:\&gt;</span> <span class="t-c">ollama --version</span></div><div><span class="t-v">ollama version 0.6.5</span></div></div></div>
+<p>This works only in the current window. Use the GUI method for a permanent fix.</p>
+</div>
+<div class="section" aria-labelledby="fix3-h2"><span class="section-label">Fix 3</span><h2 id="fix3-h2">Ollama is not installed</h2>
+<p>If the <code>dir</code> check in step 1 above returns "File Not Found", Ollama is not installed. <a href="/">Download and install OllamaSetup.exe</a>, then open a new terminal and try again.</p>
+</div>
+<div class="section" aria-labelledby="fix4-h2"><span class="section-label">Fix 4</span><h2 id="fix4-h2">Wrong Ollama version in PATH (Git or other tools)</h2>
+<p>Some tools like Git for Windows, Cygwin or Anaconda bundle older OpenSSL or other binaries that could shadow commands. Run <code>where ollama</code> to see all resolved paths:</p>
+<div class="term"><div class="term-bar"><div class="term-dot" style="background:#ff5f56"></div><div class="term-dot" style="background:#ffbd2e"></div><div class="term-dot" style="background:#27c93f"></div><span class="term-label">cmd.exe</span></div><div class="term-body"><div><span class="t-p">C:\&gt;</span> <span class="t-c">where ollama</span></div><div><span class="t-v">C:\Users\YourName\AppData\Local\Programs\Ollama\ollama.exe</span></div><div><span class="t-cm"># If you see multiple results, the first one wins.</span></div><div><span class="t-cm"># Move the Ollama folder to the TOP of PATH using the GUI.</span></div></div></div>
+</div>
+<div class="section" aria-labelledby="faq-h2"><span class="section-label">FAQ</span><h2 id="faq-h2">Not recognized questions</h2><div class="faq">
+<div class="faq-item"><details><summary>Works in cmd.exe but not in PowerShell</summary><div class="faq-ans">Both shells read from the same User PATH. If it works in one but not the other, the failing shell was opened before the PATH change. Open a brand new PowerShell window (not just a new tab) and try again.</div></details></div>
+<div class="faq-item"><details><summary>ollama pull works but ollama run does not</summary><div class="faq-ans">This is unusual &mdash; both commands use the same binary. If only <code>run</code> fails, check if the Ollama service is running: right-click the system tray icon. If there is no tray icon, start Ollama from the Start menu.</div></details></div>
+<div class="faq-item"><details><summary>After Windows update, ollama stopped working</summary><div class="faq-ans">Windows updates occasionally reset or trim PATH entries. Open Environment Variables and check that the Ollama folder is still in the list. If it is missing, add it back as described in Fix 2.</div></details></div>
+<div class="faq-item"><details><summary>setx says "SUCCESS" but ollama still not found</summary><div class="faq-ans"><code>setx</code> saves the PATH change to the registry but the current terminal does not see it. Close the terminal completely, open a new one, and try again.</div></details></div>
+</div></div>
+<div class="cta-banner"><div><h2>Need to install Ollama?</h2><p>Download the official Windows installer and set up in minutes.</p></div><a href="/" class="btn-white"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Download Ollama</a></div>
+<div style="margin-bottom:44px"><span class="section-label">Related guides</span><div class="rel-grid"><a href="/install-windows.html" class="rel-card"><div class="rel-title">Install guide &rarr;</div><div class="rel-sub">fresh install</div></a><a href="/troubleshooting.html" class="rel-card"><div class="rel-title">Troubleshooting &rarr;</div><div class="rel-sub">more fixes</div></a><a href="/ollama-port-11434.html" class="rel-card"><div class="rel-title">Port 11434 &rarr;</div><div class="rel-sub">service issues</div></a></div></div></main>
+  <aside class="content-sidebar"><div class="sb-card"><div class="sb-card-title">Install & setup</div><ul class="sb-links"><li><a href="/">Download Ollama</a></li><li><a href="/install-windows.html">Install on Windows</a></li><li><a href="/update.html">Update Ollama</a></li><li><a href="/uninstall.html">Uninstall</a></li></ul></div><div class="sb-card"><div class="sb-card-title">Features</div><ul class="sb-links"><li><a href="/gpu-acceleration.html">GPU Acceleration</a></li><li><a href="/models.html">Models Hub</a></li><li><a href="/privacy-offline.html">Offline & Privacy</a></li><li><a href="/benchmarks.html">Benchmarks</a></li><li><a href="/python.html">Python API</a></li></ul></div><div class="sb-card"><div class="sb-card-title">Troubleshoot</div><ul class="sb-links"><li><a href="/troubleshooting.html">Troubleshooting</a></li><li><a href="/ollama-not-recognized.html"style="color:var(--text);font-weight:600">Not recognized</a></li><li><a href="/ollama-offline.html">Is Ollama offline?</a></li><li><a href="/ollama-port-11434.html">Port 11434</a></li><li><a href="/ollama-models-location.html">Models location</a></li></ul></div><div class="sb-card"><div class="sb-card-title">Models</div><ul class="sb-links"><li><a href="/llama-3.html">Llama 3</a></li><li><a href="/mistral.html">Mistral</a></li><li><a href="/qwen-2-5.html">Qwen 2.5</a></li><li><a href="/phi-4-gemma-2.html">Phi-4 & Gemma 2</a></li><li><a href="/ollama-directml.html">DirectML / AMD</a></li></ul></div></aside>
+</div></div>
+<footer class="site-footer"><div class="wrap">
+  <div class="footer-inner">
+    <div>
+      <div class="footer-logo"><div class="footer-logo-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M4.22 4.22l2.12 2.12M17.66 17.66l2.12 2.12M2 12h3M19 12h3M4.22 19.78l2.12-2.12M17.66 6.34l2.12-2.12"/></svg></div><span class="footer-logo-name">AI Ollama</span></div>
+      <p class="footer-tagline">Unofficial Windows guide for Ollama &mdash; download, install, configure, troubleshoot.</p>
+    </div>
+    <div>
+      <div class="footer-col-title">Install &amp; setup</div>
+      <ul class="footer-links">
+        <li><a href="/">Download Ollama</a></li>
+        <li><a href="/install-windows.html">Install on Windows</a></li>
+        <li><a href="/update.html">Update Ollama</a></li>
+        <li><a href="/uninstall.html">Uninstall</a></li>
+        <li><a href="/install-openssl-windows-server.html">Windows Server</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Features</div>
+      <ul class="footer-links">
+        <li><a href="/gpu-acceleration.html">GPU Acceleration</a></li>
+        <li><a href="/models.html">Models Hub</a></li>
+        <li><a href="/privacy-offline.html">Offline &amp; Privacy</a></li>
+        <li><a href="/benchmarks.html">Benchmarks</a></li>
+        <li><a href="/python.html">Python API</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Help</div>
+      <ul class="footer-links">
+        <li><a href="/troubleshooting.html">Troubleshooting</a></li>
+        <li><a href="/ollama-not-recognized.html">Not recognized fix</a></li>
+        <li><a href="/ollama-offline.html">Is Ollama offline?</a></li>
+        <li><a href="/faq.html">FAQ</a></li>
+        <li><a href="/privacy.html">Privacy policy</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p class="footer-copy">Not affiliated with Ollama or its developers. Unofficial guide site.</p>
+    <p class="footer-legal"><strong>Affiliate disclosure:</strong> Download links may be partner links.</p>
+  </div>
+</div></footer>
+<div class="cookie-bar" id="cookieBar" style="display:none">
+  <p>We use Google Analytics to understand traffic. <a href="/privacy.html">Privacy policy</a></p>
+  <div class="cookie-btns"><button class="cookie-accept" id="cookieAccept">Accept</button><button class="cookie-decline" id="cookieDecline">Decline</button></div>
+</div>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-JZTGSFRZBD"></script>
+<script>
+window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}
+gtag('consent','default',{analytics_storage:'denied',ad_storage:'denied'});
+gtag('js',new Date());gtag('config','G-JZTGSFRZBD',{send_page_view:false});
+function grantGA(){gtag('consent','update',{analytics_storage:'granted'});gtag('event','page_view',{page_location:location.href,page_title:document.title})}
+document.addEventListener('DOMContentLoaded',function(){
+  var bar=document.getElementById('cookieBar');
+  var c=localStorage.getItem('ollama_consent');
+  if(!c){bar.style.display='flex'}else if(c==='1'){grantGA()}
+  document.getElementById('cookieAccept').addEventListener('click',function(){localStorage.setItem('ollama_consent','1');grantGA();bar.style.display='none'});
+  document.getElementById('cookieDecline').addEventListener('click',function(){localStorage.setItem('ollama_consent','0');bar.style.display='none'});
+});
+</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"HowTo","name":"Fix ollama is not recognized on Windows","description":"Step-by-step guide to fix the ollama not recognized error on Windows in cmd.exe and PowerShell.","step":[{"@type":"HowToStep","position":1,"name":"Open a new terminal","text":"Close all open terminals and open a brand new Command Prompt or PowerShell window."},{"@type":"HowToStep","position":2,"name":"Check if installed","text":"dir %LOCALAPPDATA%\\Programs\\Ollama\\ollama.exe"},{"@type":"HowToStep","position":3,"name":"Check PATH","text":"where ollama"},{"@type":"HowToStep","position":4,"name":"Add to PATH if missing","text":"Add %LOCALAPPDATA%\\Programs\\Ollama to User PATH via Environment Variables."}]}</script>
+<script>var el=document.getElementById('nl-ts');if(el)el.classList.add('active');</script>
+</body></html>

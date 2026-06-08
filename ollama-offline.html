@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Does Ollama Work Offline? Yes — Complete Offline Mode Guide for Windows</title>
+  <meta name="description" content="Ollama works completely offline after model download. Prompts never leave your machine. Learn how offline mode works, how to use Ollama air-gapped, and how to block internet access.">
+  <link rel="canonical" href="https://ai-ollama.github.io/ollama-offline.html">
+  <meta name="last-modified" content="2026-06-08">
+  <meta property="og:title" content="Does Ollama Work Offline? Yes — Complete Offline Mode Guide for Windows">
+  <meta property="og:description" content="Ollama works completely offline after model download. Prompts never leave your machine. Learn how offline mode works, how to use Ollama air-gapped, and how to block internet access.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://ai-ollama.github.io/ollama-offline.html">
+  <meta property="og:image" content="https://ai-ollama.github.io/ollama-og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="shortcut icon" href="/favicon.ico">
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<nav class="site-nav"><div class="wrap"><div class="nav-inner">
+  <a href="/" class="nav-logo"><div class="nav-logo-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M4.22 4.22l2.12 2.12M17.66 17.66l2.12 2.12M2 12h3M19 12h3M4.22 19.78l2.12-2.12M17.66 6.34l2.12-2.12"/></svg></div><span class="nav-logo-name">AI Ollama</span></a>
+  <div class="nav-links">
+    <a href="/" id="nl-home">Download</a>
+    <a href="/install-windows.html" id="nl-install">Install</a>
+    <a href="/gpu-acceleration.html" id="nl-gpu">GPU</a>
+    <a href="/models.html" id="nl-models">Models</a>
+    <a href="/faq.html" id="nl-faq">FAQ</a>
+    <a href="/troubleshooting.html" id="nl-ts">Help</a>
+  </div>
+  <a href="/" class="nav-cta"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Download</a>
+</div></div></nav>
+<div class="page-hero"><div class="wrap">
+  <nav class="breadcrumb"><a href="/">ai-ollama.github.io</a> <span>/</span> <span>ollama-offline</span></nav>
+  <span class="page-tag">Offline guide</span>
+  <h1>Does Ollama work offline? &mdash; <em>yes, completely</em></h1>
+  <p class="page-lead">Ollama works 100% offline after you download a model. No cloud calls, no telemetry during inference, no internet required. This guide explains how offline mode works, how to test it, and how to deploy Ollama in air-gapped environments.</p>
+  
+</div></div>
+<div class="wrap"><div class="content-layout">
+  <main><div class="section" aria-labelledby="answer-h2"><span class="section-label">Direct answer</span><h2 id="answer-h2">Does Ollama work offline? Yes &mdash; completely.</h2>
+<p>Once you have downloaded a model with <code>ollama pull</code>, Ollama works with no internet connection at all. You can disconnect your Wi-Fi, unplug your ethernet cable, or enable Airplane mode &mdash; Ollama will continue generating text without any errors or degradation.</p>
+<p>This is because Ollama runs the entire language model locally on your hardware. There is no server-side component, no API call to the cloud, and no telemetry sent during inference. The model weights sit on your disk and are loaded into your GPU or RAM when you run a prompt.</p>
+<div class="callout callout-ok"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>Ollama is fully offline after the initial model download. You can use it on a plane, in a bunker, or anywhere without internet access.</span></div>
+</div>
+<div class="section" aria-labelledby="what-needs-h2"><span class="section-label">What needs internet</span><h2 id="what-needs-h2">The only things that require an internet connection</h2>
+<div class="tbl-wrap"><table><thead><tr><th>Action</th><th>Needs internet?</th><th>Notes</th></tr></thead><tbody>
+<tr><td><code>ollama pull modelname</code></td><td class="td-warn">Yes</td><td>Downloads model weights from the Ollama registry (~2&ndash;40 GB)</td></tr>
+<tr><td><code>ollama run modelname</code></td><td class="td-ok">No</td><td>Runs entirely locally after pull</td></tr>
+<tr><td>Calling <code>localhost:11434</code> API</td><td class="td-ok">No</td><td>Local network only</td></tr>
+<tr><td>Checking for Ollama updates</td><td class="td-warn">Only if you manually check</td><td>No background update checks</td></tr>
+<tr><td>Using Ollama Python library</td><td class="td-ok">No</td><td>Calls local API only</td></tr>
+</tbody></table></div>
+</div>
+<div class="section" aria-labelledby="test-h2"><span class="section-label">Try it yourself</span><h2 id="test-h2">How to verify Ollama works offline</h2>
+<ul class="steps">
+<li class="step"><div class="step-n">1</div><div><h3>Pull a model while connected</h3>
+<div class="term"><div class="term-bar"><div class="term-dot" style="background:#ff5f56"></div><div class="term-dot" style="background:#ffbd2e"></div><div class="term-dot" style="background:#27c93f"></div><span class="term-label">cmd.exe</span></div><div class="term-body"><div><span class="t-p">C:\&gt;</span> <span class="t-c">ollama pull mistral</span></div><div><span class="t-ok">success</span></div></div></div>
+</div></li>
+<li class="step"><div class="step-n">2</div><div><h3>Disconnect from the internet</h3><p>Turn off Wi-Fi or unplug ethernet. Enable Airplane mode if you want to be thorough.</p></div></li>
+<li class="step"><div class="step-n">3</div><div><h3>Run the model</h3>
+<div class="term"><div class="term-bar"><div class="term-dot" style="background:#ff5f56"></div><div class="term-dot" style="background:#ffbd2e"></div><div class="term-dot" style="background:#27c93f"></div><span class="term-label">cmd.exe — no internet</span></div><div class="term-body"><div><span class="t-p">C:\&gt;</span> <span class="t-c">ollama run mistral</span></div><div><span class="t-v">&gt;&gt;&gt;</span> <span class="t-c">Explain quantum computing</span></div><div><span class="t-ok">Quantum computing uses quantum mechanical phenomena...</span></div><div><span class="t-cm"># Works perfectly with no internet</span></div></div></div>
+</div></li>
+</ul>
+</div>
+<div class="section" aria-labelledby="airgap-h2"><span class="section-label">Air-gapped use</span><h2 id="airgap-h2">Using Ollama in air-gapped environments</h2>
+<p>To deploy Ollama in an environment with no internet access at all (corporate air-gap, secure facility, offline lab), you can transfer the installer and model files manually:</p>
+<ul class="steps">
+<li class="step"><div class="step-n">1</div><div><h3>On a connected machine, download everything</h3>
+<div class="term"><div class="term-bar"><div class="term-dot" style="background:#ff5f56"></div><div class="term-dot" style="background:#ffbd2e"></div><div class="term-dot" style="background:#27c93f"></div><span class="term-label">cmd.exe — connected machine</span></div><div class="term-body"><div><span class="t-cm"># Install Ollama and pull the model:</span></div><div><span class="t-p">C:\&gt;</span> <span class="t-c">ollama pull llama3</span></div><div><span class="t-ok">success</span></div></div></div>
+</div></li>
+<li class="step"><div class="step-n">2</div><div><h3>Copy files to the air-gapped machine</h3>
+<p>Transfer two things via USB drive or internal network:</p><ul>
+<li><strong>Installer:</strong> <code>OllamaSetup.exe</code></li>
+<li><strong>Model files:</strong> the entire <code>C:\Users\YourName\.ollama</code> folder</li>
+</ul>
+</div></li>
+<li class="step"><div class="step-n">3</div><div><h3>On the air-gapped machine, install and restore</h3>
+<div class="term"><div class="term-bar"><div class="term-dot" style="background:#ff5f56"></div><div class="term-dot" style="background:#ffbd2e"></div><div class="term-dot" style="background:#27c93f"></div><span class="term-label">cmd.exe — air-gapped machine</span></div><div class="term-body"><div><span class="t-cm"># Run the installer, then copy the .ollama folder</span></div><div><span class="t-cm"># to C:\Users\YourName\.ollama</span></div><div></div><div>span class="t-p">C:\&gt;</span> <span class="t-c">ollama list</span></div><div><span class="t-v">llama3:latest  4.7 GB</span></div><div><span class="t-p">C:\&gt;</span> <span class="t-c">ollama run llama3</span></div><div><span class="t-ok">&gt;&gt;&gt; Ready</span></div></div></div>
+</div></li>
+</ul>
+</div>
+<div class="section" aria-labelledby="block-h2"><span class="section-label">Enforce offline</span><h2 id="block-h2">Block Ollama from ever accessing the internet</h2>
+<p>For maximum control, add a Windows Firewall outbound rule that prevents Ollama from making any outbound connections:</p>
+<div class="term"><div class="term-bar"><div class="term-dot" style="background:#ff5f56"></div><div class="term-dot" style="background:#ffbd2e"></div><div class="term-dot" style="background:#27c93f"></div><span class="term-label">PowerShell — admin</span></div><div class="term-body"><div><span class="t-p">PS&gt;</span> <span class="t-c">New-NetFirewallRule `</span></div><div><span class="t-c">  -DisplayName "Block Ollama internet" `</span></div><div><span class="t-c">  -Direction Outbound `</span></div><div><span class="t-c">  -Program "$env:LOCALAPPDATA\Programs\Ollama\ollama.exe" `</span></div><div><span class="t-c">  -Action Block</span></div></div></div>
+<div class="callout callout-warn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg><span>This blocks ALL outbound connections including <code>ollama pull</code>. Remove the rule when you need to download new models.</span></div>
+</div>
+<div class="section" aria-labelledby="faq-h2"><span class="section-label">FAQ</span><h2 id="faq-h2">Offline questions</h2><div class="faq">
+<div class="faq-item"><details><summary>Does Ollama send prompts to the cloud?</summary><div class="faq-ans">No. When you run a model, your prompt is processed entirely on your local CPU or GPU. The output is generated locally and returned to your terminal or to <code>localhost:11434</code>. Nothing is sent to any external server.</div></details></div>
+<div class="faq-item"><details><summary>Can I use Ollama on a plane with no Wi-Fi?</summary><div class="faq-ans">Yes, as long as you have downloaded your models before boarding. Pull the models you need at home or the office, and Ollama will work anywhere without any internet connection.</div></details></div>
+<div class="faq-item"><details><summary>Does Ollama require internet after model download?</summary><div class="faq-ans">No. The only time internet is needed is the initial <code>ollama pull</code> to download model weights. After that, everything runs offline indefinitely.</div></details></div>
+<div class="faq-item"><details><summary>Will pulling a model fail if my connection drops mid-download?</summary><div class="faq-ans">No. Ollama resumes interrupted downloads automatically. If your connection drops during <code>ollama pull</code>, just run the same command again when back online and it will continue from where it left off.</div></details></div>
+</div></div>
+<div class="cta-banner"><div><h2>Want to know more about Ollama privacy?</h2><p>Full guide to local data storage, telemetry and firewall control.</p></div><a href="/privacy-offline.html" class="btn-white"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Privacy & offline guide</a></div>
+<div style="margin-bottom:44px"><span class="section-label">Related guides</span><div class="rel-grid"><a href="/privacy-offline.html" class="rel-card"><div class="rel-title">Privacy & offline &rarr;</div><div class="rel-sub">data storage & telemetry</div></a><a href="/install-windows.html" class="rel-card"><div class="rel-title">Install guide &rarr;</div><div class="rel-sub">get started</div></a><a href="/troubleshooting.html" class="rel-card"><div class="rel-title">Troubleshooting &rarr;</div><div class="rel-sub">fix issues</div></a></div></div></main>
+  <aside class="content-sidebar"><div class="sb-card"><div class="sb-card-title">Install & setup</div><ul class="sb-links"><li><a href="/">Download Ollama</a></li><li><a href="/install-windows.html">Install on Windows</a></li><li><a href="/update.html">Update Ollama</a></li><li><a href="/uninstall.html">Uninstall</a></li></ul></div><div class="sb-card"><div class="sb-card-title">Features</div><ul class="sb-links"><li><a href="/gpu-acceleration.html">GPU Acceleration</a></li><li><a href="/models.html">Models Hub</a></li><li><a href="/privacy-offline.html">Offline & Privacy</a></li><li><a href="/benchmarks.html">Benchmarks</a></li><li><a href="/python.html">Python API</a></li></ul></div><div class="sb-card"><div class="sb-card-title">Troubleshoot</div><ul class="sb-links"><li><a href="/troubleshooting.html">Troubleshooting</a></li><li><a href="/ollama-not-recognized.html">Not recognized</a></li><li><a href="/ollama-offline.html"style="color:var(--text);font-weight:600">Is Ollama offline?</a></li><li><a href="/ollama-port-11434.html">Port 11434</a></li><li><a href="/ollama-models-location.html">Models location</a></li></ul></div><div class="sb-card"><div class="sb-card-title">Models</div><ul class="sb-links"><li><a href="/llama-3.html">Llama 3</a></li><li><a href="/mistral.html">Mistral</a></li><li><a href="/qwen-2-5.html">Qwen 2.5</a></li><li><a href="/phi-4-gemma-2.html">Phi-4 & Gemma 2</a></li><li><a href="/ollama-directml.html">DirectML / AMD</a></li></ul></div></aside>
+</div></div>
+<footer class="site-footer"><div class="wrap">
+  <div class="footer-inner">
+    <div>
+      <div class="footer-logo"><div class="footer-logo-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M4.22 4.22l2.12 2.12M17.66 17.66l2.12 2.12M2 12h3M19 12h3M4.22 19.78l2.12-2.12M17.66 6.34l2.12-2.12"/></svg></div><span class="footer-logo-name">AI Ollama</span></div>
+      <p class="footer-tagline">Unofficial Windows guide for Ollama &mdash; download, install, configure, troubleshoot.</p>
+    </div>
+    <div>
+      <div class="footer-col-title">Install &amp; setup</div>
+      <ul class="footer-links">
+        <li><a href="/">Download Ollama</a></li>
+        <li><a href="/install-windows.html">Install on Windows</a></li>
+        <li><a href="/update.html">Update Ollama</a></li>
+        <li><a href="/uninstall.html">Uninstall</a></li>
+        <li><a href="/install-openssl-windows-server.html">Windows Server</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Features</div>
+      <ul class="footer-links">
+        <li><a href="/gpu-acceleration.html">GPU Acceleration</a></li>
+        <li><a href="/models.html">Models Hub</a></li>
+        <li><a href="/privacy-offline.html">Offline &amp; Privacy</a></li>
+        <li><a href="/benchmarks.html">Benchmarks</a></li>
+        <li><a href="/python.html">Python API</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Help</div>
+      <ul class="footer-links">
+        <li><a href="/troubleshooting.html">Troubleshooting</a></li>
+        <li><a href="/ollama-not-recognized.html">Not recognized fix</a></li>
+        <li><a href="/ollama-offline.html">Is Ollama offline?</a></li>
+        <li><a href="/faq.html">FAQ</a></li>
+        <li><a href="/privacy.html">Privacy policy</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p class="footer-copy">Not affiliated with Ollama or its developers. Unofficial guide site.</p>
+    <p class="footer-legal"><strong>Affiliate disclosure:</strong> Download links may be partner links.</p>
+  </div>
+</div></footer>
+<div class="cookie-bar" id="cookieBar" style="display:none">
+  <p>We use Google Analytics to understand traffic. <a href="/privacy.html">Privacy policy</a></p>
+  <div class="cookie-btns"><button class="cookie-accept" id="cookieAccept">Accept</button><button class="cookie-decline" id="cookieDecline">Decline</button></div>
+</div>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-JZTGSFRZBD"></script>
+<script>
+window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}
+gtag('consent','default',{analytics_storage:'denied',ad_storage:'denied'});
+gtag('js',new Date());gtag('config','G-JZTGSFRZBD',{send_page_view:false});
+function grantGA(){gtag('consent','update',{analytics_storage:'granted'});gtag('event','page_view',{page_location:location.href,page_title:document.title})}
+document.addEventListener('DOMContentLoaded',function(){
+  var bar=document.getElementById('cookieBar');
+  var c=localStorage.getItem('ollama_consent');
+  if(!c){bar.style.display='flex'}else if(c==='1'){grantGA()}
+  document.getElementById('cookieAccept').addEventListener('click',function(){localStorage.setItem('ollama_consent','1');grantGA();bar.style.display='none'});
+  document.getElementById('cookieDecline').addEventListener('click',function(){localStorage.setItem('ollama_consent','0');bar.style.display='none'});
+});
+</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Does Ollama work offline?","acceptedAnswer":{"@type":"Answer","text":"Yes, completely. After downloading a model with ollama pull, Ollama works with no internet connection. Prompts and responses never leave your machine."}},{"@type":"Question","name":"Does Ollama require internet after model download?","acceptedAnswer":{"@type":"Answer","text":"No. The only time internet is needed is the initial ollama pull to download model weights. After that, everything runs offline indefinitely."}},{"@type":"Question","name":"Does Ollama send prompts to the cloud?","acceptedAnswer":{"@type":"Answer","text":"No. Prompts are processed entirely on your local CPU or GPU. Nothing is sent to any external server."}},{"@type":"Question","name":"Can I use Ollama in an air-gapped environment?","acceptedAnswer":{"@type":"Answer","text":"Yes. Download the installer and model files on a connected machine, copy the .ollama folder to the air-gapped machine, and Ollama runs without any internet access."}}]}</script>
+<script>var el=document.getElementById('nl-home');if(el)el.classList.add('active');</script>
+</body></html>

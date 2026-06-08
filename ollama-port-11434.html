@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Ollama Port 11434 — Fix Conflicts, Change Port, Network Access Guide</title>
+  <meta name="description" content="Fix port 11434 already in use for Ollama on Windows. Find the conflicting process, kill it, change port with OLLAMA_HOST, expose to local network and configure Windows Firewall.">
+  <link rel="canonical" href="https://ai-ollama.github.io/ollama-port-11434.html">
+  <meta name="last-modified" content="2026-06-08">
+  <meta property="og:title" content="Ollama Port 11434 — Fix Conflicts, Change Port, Network Access Guide">
+  <meta property="og:description" content="Fix port 11434 already in use for Ollama on Windows. Find the conflicting process, kill it, change port with OLLAMA_HOST, expose to local network and configure Windows Firewall.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://ai-ollama.github.io/ollama-port-11434.html">
+  <meta property="og:image" content="https://ai-ollama.github.io/ollama-og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="shortcut icon" href="/favicon.ico">
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<nav class="site-nav"><div class="wrap"><div class="nav-inner">
+  <a href="/" class="nav-logo"><div class="nav-logo-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M4.22 4.22l2.12 2.12M17.66 17.66l2.12 2.12M2 12h3M19 12h3M4.22 19.78l2.12-2.12M17.66 6.34l2.12-2.12"/></svg></div><span class="nav-logo-name">AI Ollama</span></a>
+  <div class="nav-links">
+    <a href="/" id="nl-home">Download</a>
+    <a href="/install-windows.html" id="nl-install">Install</a>
+    <a href="/gpu-acceleration.html" id="nl-gpu">GPU</a>
+    <a href="/models.html" id="nl-models">Models</a>
+    <a href="/faq.html" id="nl-faq">FAQ</a>
+    <a href="/troubleshooting.html" id="nl-ts">Help</a>
+  </div>
+  <a href="/" class="nav-cta"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Download</a>
+</div></div></nav>
+<div class="page-hero"><div class="wrap">
+  <nav class="breadcrumb"><a href="/">ai-ollama.github.io</a> <span>/</span> <span>ollama-port-11434</span></nav>
+  <span class="page-tag">Guide</span>
+  <h1>Ollama port 11434 &mdash; <em>fix conflicts &amp; configuration guide</em></h1>
+  <p class="page-lead">Ollama listens on <code>localhost:11434</code> by default. This guide covers fixing "port already in use" errors, changing the port with <code>OLLAMA_HOST</code>, exposing Ollama to your LAN, and configuring Windows Firewall.</p>
+  
+</div></div>
+<div class="wrap"><div class="content-layout">
+  <main><div class="section" aria-labelledby="what-h2"><span class="section-label">What is port 11434?</span><h2 id="what-h2">Ollama uses port 11434 for its local API</h2>
+<p>When Ollama starts on Windows, it binds to <code>localhost:11434</code> and listens for HTTP requests. This is the local API that you (or any compatible app) use to send prompts and receive responses. The port is only accessible on your own machine &mdash; it is not exposed to the internet or your local network by default.</p>
+<p>You can verify Ollama is running by visiting <code>http://localhost:11434</code> in a browser or running <code>curl http://localhost:11434</code> in a terminal. You should see the text <strong>Ollama is running</strong>.</p>
+<div class="term"><div class="term-bar"><div class="term-dot" style="background:#ff5f56"></div><div class="term-dot" style="background:#ffbd2e"></div><div class="term-dot" style="background:#27c93f"></div><span class="term-label">cmd.exe</span></div><div class="term-body"><div><span class="t-p">C:\&gt;</span> <span class="t-c">curl http://localhost:11434</span></div><div><span class="t-ok">Ollama is running</span></div></div></div>
+</div>
+<div class="section" aria-labelledby="conflict-h2"><span class="section-label">Port conflict fix</span><h2 id="conflict-h2">Fix "port 11434 already in use"</h2>
+<p>This error means another process is already using port 11434 when Ollama tries to start. Most commonly it is a previous Ollama instance that did not shut down cleanly.</p>
+<ul class="steps">
+<li class="step"><div class="step-n">1</div><div><h3>Find which process is using the port</h3>
+<div class="term"><div class="term-bar"><div class="term-dot" style="background:#ff5f56"></div><div class="term-dot" style="background:#ffbd2e"></div><div class="term-dot" style="background:#27c93f"></div><span class="term-label">cmd.exe</span></div><div class="term-body"><div><span class="t-p">C:\&gt;</span> <span class="t-c">netstat -ano | findstr 11434</span></div><div><span class="t-v">TCP  127.0.0.1:11434  0.0.0.0:0  LISTENING  8472</span></div><div><span class="t-cm"># The last number (8472) is the PID</span></div></div></div>
+</div></li>
+<li class="step"><div class="step-n">2</div><div><h3>Identify the process by PID</h3>
+<div class="term"><div class="term-bar"><div class="term-dot" style="background:#ff5f56"></div><div class="term-dot" style="background:#ffbd2e"></div><div class="term-dot" style="background:#27c93f"></div><span class="term-label">cmd.exe</span></div><div class="term-body"><div><span class="t-p">C:\&gt;</span> <span class="t-c">tasklist | findstr 8472</span></div><div><span class="t-v">ollama.exe  8472  Console  1  45,320 K</span></div><div><span class="t-cm"># It is a previous Ollama instance</span></div></div></div>
+</div></li>
+<li class="step"><div class="step-n">3</div><div><h3>Stop the process</h3><p>If it is an Ollama process: right-click the Ollama system tray icon &rarr; <strong>Quit Ollama</strong>. Or force-kill by PID:</p>
+<div class="term"><div class="term-bar"><div class="term-dot" style="background:#ff5f56"></div><div class="term-dot" style="background:#ffbd2e"></div><div class="term-dot" style="background:#27c93f"></div><span class="term-label">cmd.exe</span></div><div class="term-body"><div><span class="t-p">C:\&gt;</span> <span class="t-c">taskkill /PID 8472 /F</span></div><div><span class="t-ok">SUCCESS: The process with PID 8472 has been terminated.</span></div></div></div>
+</div></li>
+<li class="step"><div class="step-n">4</div><div><h3>Restart Ollama</h3><p>Start Ollama from the Start menu. Verify the port is now available:</p>
+<div class="term"><div class="term-bar"><div class="term-dot" style="background:#ff5f56"></div><div class="term-dot" style="background:#ffbd2e"></div><div class="term-dot" style="background:#27c93f"></div><span class="term-label">cmd.exe</span></div><div class="term-body"><div><span class="t-p">C:\&gt;</span> <span class="t-c">curl http://localhost:11434</span></div><div><span class="t-ok">Ollama is running</span></div></div></div>
+</div></li>
+</ul>
+</div>
+<div class="section" aria-labelledby="change-h2"><span class="section-label">Change port</span><h2 id="change-h2">Use a different port</h2>
+<p>If port 11434 is permanently used by another application on your system, you can configure Ollama to use a different port via the <code>OLLAMA_HOST</code> environment variable:</p>
+<div class="term"><div class="term-bar"><div class="term-dot" style="background:#ff5f56"></div><div class="term-dot" style="background:#ffbd2e"></div><div class="term-dot" style="background:#27c93f"></div><span class="term-label">cmd.exe — set for current session</span></div><div class="term-body"><div><span class="t-cm"># Use port 11435 instead:</span></div><div><span class="t-p">C:\&gt;</span> <span class="t-c">set OLLAMA_HOST=127.0.0.1:11435</span></div><div><span class="t-p">C:\&gt;</span> <span class="t-c">ollama serve</span></div></div></div>
+<p>To make it permanent, add <code>OLLAMA_HOST</code> as a System environment variable with value <code>127.0.0.1:11435</code> via Settings &rarr; System &rarr; Advanced system settings &rarr; Environment Variables.</p>
+<div class="callout callout-warn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg><span>If you change the port, any apps or scripts that call <code>localhost:11434</code> must also be updated to use the new port.</span></div>
+</div>
+<div class="section" aria-labelledby="expose-h2"><span class="section-label">Network access</span><h2 id="expose-h2">Expose Ollama to your local network</h2>
+<p>By default Ollama only listens on <code>127.0.0.1</code> (localhost). To allow other devices on your LAN to connect &mdash; for example, a phone running a chat app against your PC:</p>
+<div class="term"><div class="term-bar"><div class="term-dot" style="background:#ff5f56"></div><div class="term-dot" style="background:#ffbd2e"></div><div class="term-dot" style="background:#27c93f"></div><span class="term-label">cmd.exe</span></div><div class="term-body"><div><span class="t-cm"># Listen on all network interfaces:</span></div><div><span class="t-p">C:\&gt;</span> <span class="t-c">set OLLAMA_HOST=0.0.0.0:11434</span></div><div><span class="t-p">C:\&gt;</span> <span class="t-c">ollama serve</span></div></div></div>
+<p>Other devices on your LAN can then connect to <code>http://YOUR-PC-IP:11434</code>.</p>
+<div class="callout callout-warn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg><span>Exposing Ollama to your network gives any device on that network access to your local models. Only do this on trusted networks.</span></div>
+</div>
+<div class="section" aria-labelledby="firewall-h2"><span class="section-label">Windows Firewall</span><h2 id="firewall-h2">Allow apps to reach Ollama through Windows Firewall</h2>
+<p>When Ollama starts for the first time, Windows Firewall may prompt you to allow connections. Click <strong>Allow access</strong> for private networks. If you missed this prompt or accidentally blocked it:</p>
+<div class="term"><div class="term-bar"><div class="term-dot" style="background:#ff5f56"></div><div class="term-dot" style="background:#ffbd2e"></div><div class="term-dot" style="background:#27c93f"></div><span class="term-label">PowerShell — admin</span></div><div class="term-body"><div><span class="t-p">PS&gt;</span> <span class="t-c">New-NetFirewallRule -DisplayName "Ollama local" -Direction Inbound -Protocol TCP -LocalPort 11434 -Action Allow -Profile Private</span></div></div></div>
+</div>
+<div class="section" aria-labelledby="faq-h2"><span class="section-label">FAQ</span><h2 id="faq-h2">Port 11434 questions</h2><div class="faq">
+<div class="faq-item"><details><summary>Is port 11434 exposed to the internet?</summary><div class="faq-ans">No. By default Ollama only binds to <code>127.0.0.1</code> (localhost), which is only accessible from your own machine. It is not reachable from the internet or your local network unless you explicitly set <code>OLLAMA_HOST=0.0.0.0</code>.</div></details></div>
+<div class="faq-item"><details><summary>Another Ollama is already running &mdash; how do I know?</summary><div class="faq-ans">Check the system tray (bottom-right). If you see the Ollama icon, the service is running. You can also run <code>curl http://localhost:11434</code> &mdash; "Ollama is running" confirms it is active.</div></details></div>
+<div class="faq-item"><details><summary>ollama serve: listen tcp: bind: address already in use</summary><div class="faq-ans">Ollama is already running in the background. You do not need to run <code>ollama serve</code> manually &mdash; the service starts automatically. Just use <code>ollama run</code> or <code>ollama pull</code> directly.</div></details></div>
+</div></div>
+<div class="cta-banner"><div><h2>Ollama not starting at all?</h2><p>Check the full troubleshooting guide for service and startup issues.</p></div><a href="/troubleshooting.html" class="btn-white"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Troubleshooting guide</a></div>
+<div style="margin-bottom:44px"><span class="section-label">Related guides</span><div class="rel-grid"><a href="/troubleshooting.html" class="rel-card"><div class="rel-title">Troubleshooting &rarr;</div><div class="rel-sub">all issues</div></a><a href="/ollama-not-recognized.html" class="rel-card"><div class="rel-title">Not recognized &rarr;</div><div class="rel-sub">PATH issues</div></a><a href="/install-windows.html" class="rel-card"><div class="rel-title">Install guide &rarr;</div><div class="rel-sub">fresh install</div></a></div></div></main>
+  <aside class="content-sidebar"><div class="sb-card"><div class="sb-card-title">Install & setup</div><ul class="sb-links"><li><a href="/">Download Ollama</a></li><li><a href="/install-windows.html">Install on Windows</a></li><li><a href="/update.html">Update Ollama</a></li><li><a href="/uninstall.html">Uninstall</a></li></ul></div><div class="sb-card"><div class="sb-card-title">Features</div><ul class="sb-links"><li><a href="/gpu-acceleration.html">GPU Acceleration</a></li><li><a href="/models.html">Models Hub</a></li><li><a href="/privacy-offline.html">Offline & Privacy</a></li><li><a href="/benchmarks.html">Benchmarks</a></li><li><a href="/python.html">Python API</a></li></ul></div><div class="sb-card"><div class="sb-card-title">Troubleshoot</div><ul class="sb-links"><li><a href="/troubleshooting.html">Troubleshooting</a></li><li><a href="/ollama-not-recognized.html">Not recognized</a></li><li><a href="/ollama-offline.html">Is Ollama offline?</a></li><li><a href="/ollama-port-11434.html"style="color:var(--text);font-weight:600">Port 11434</a></li><li><a href="/ollama-models-location.html">Models location</a></li></ul></div><div class="sb-card"><div class="sb-card-title">Models</div><ul class="sb-links"><li><a href="/llama-3.html">Llama 3</a></li><li><a href="/mistral.html">Mistral</a></li><li><a href="/qwen-2-5.html">Qwen 2.5</a></li><li><a href="/phi-4-gemma-2.html">Phi-4 & Gemma 2</a></li><li><a href="/ollama-directml.html">DirectML / AMD</a></li></ul></div></aside>
+</div></div>
+<footer class="site-footer"><div class="wrap">
+  <div class="footer-inner">
+    <div>
+      <div class="footer-logo"><div class="footer-logo-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M4.22 4.22l2.12 2.12M17.66 17.66l2.12 2.12M2 12h3M19 12h3M4.22 19.78l2.12-2.12M17.66 6.34l2.12-2.12"/></svg></div><span class="footer-logo-name">AI Ollama</span></div>
+      <p class="footer-tagline">Unofficial Windows guide for Ollama &mdash; download, install, configure, troubleshoot.</p>
+    </div>
+    <div>
+      <div class="footer-col-title">Install &amp; setup</div>
+      <ul class="footer-links">
+        <li><a href="/">Download Ollama</a></li>
+        <li><a href="/install-windows.html">Install on Windows</a></li>
+        <li><a href="/update.html">Update Ollama</a></li>
+        <li><a href="/uninstall.html">Uninstall</a></li>
+        <li><a href="/install-openssl-windows-server.html">Windows Server</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Features</div>
+      <ul class="footer-links">
+        <li><a href="/gpu-acceleration.html">GPU Acceleration</a></li>
+        <li><a href="/models.html">Models Hub</a></li>
+        <li><a href="/privacy-offline.html">Offline &amp; Privacy</a></li>
+        <li><a href="/benchmarks.html">Benchmarks</a></li>
+        <li><a href="/python.html">Python API</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Help</div>
+      <ul class="footer-links">
+        <li><a href="/troubleshooting.html">Troubleshooting</a></li>
+        <li><a href="/ollama-not-recognized.html">Not recognized fix</a></li>
+        <li><a href="/ollama-offline.html">Is Ollama offline?</a></li>
+        <li><a href="/faq.html">FAQ</a></li>
+        <li><a href="/privacy.html">Privacy policy</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p class="footer-copy">Not affiliated with Ollama or its developers. Unofficial guide site.</p>
+    <p class="footer-legal"><strong>Affiliate disclosure:</strong> Download links may be partner links.</p>
+  </div>
+</div></footer>
+<div class="cookie-bar" id="cookieBar" style="display:none">
+  <p>We use Google Analytics to understand traffic. <a href="/privacy.html">Privacy policy</a></p>
+  <div class="cookie-btns"><button class="cookie-accept" id="cookieAccept">Accept</button><button class="cookie-decline" id="cookieDecline">Decline</button></div>
+</div>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-JZTGSFRZBD"></script>
+<script>
+window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}
+gtag('consent','default',{analytics_storage:'denied',ad_storage:'denied'});
+gtag('js',new Date());gtag('config','G-JZTGSFRZBD',{send_page_view:false});
+function grantGA(){gtag('consent','update',{analytics_storage:'granted'});gtag('event','page_view',{page_location:location.href,page_title:document.title})}
+document.addEventListener('DOMContentLoaded',function(){
+  var bar=document.getElementById('cookieBar');
+  var c=localStorage.getItem('ollama_consent');
+  if(!c){bar.style.display='flex'}else if(c==='1'){grantGA()}
+  document.getElementById('cookieAccept').addEventListener('click',function(){localStorage.setItem('ollama_consent','1');grantGA();bar.style.display='none'});
+  document.getElementById('cookieDecline').addEventListener('click',function(){localStorage.setItem('ollama_consent','0');bar.style.display='none'});
+});
+</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"HowTo","name":"Fix Ollama Port 11434 Conflicts on Windows","description":"How to fix port 11434 already in use, change the Ollama port, and configure network access on Windows.","step":[{"@type":"HowToStep","position":1,"name":"Find conflicting process","text":"netstat -ano | findstr 11434"},{"@type":"HowToStep","position":2,"name":"Identify by PID","text":"tasklist | findstr PID_NUMBER"},{"@type":"HowToStep","position":3,"name":"Stop the process","text":"Right-click Ollama tray > Quit, or taskkill /PID xxx /F"},{"@type":"HowToStep","position":4,"name":"Restart Ollama","text":"Start Ollama from Start menu and verify with curl http://localhost:11434"}]}</script>
+<script>var el=document.getElementById('nl-ts');if(el)el.classList.add('active');</script>
+</body></html>

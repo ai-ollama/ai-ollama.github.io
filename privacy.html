@@ -1,224 +1,140 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
-  <meta name="robots" content="index,follow" />
-  <title>Privacy Policy | AI Ollama Helper</title>
-  <meta name="description" content="AI Ollama Helper privacy policy: what data we collect, cookies/local storage, analytics after consent, your choices, and how to contact us." />
-  <link rel="canonical" href="https://ai-ollama.github.io/privacy.html" />
-  <meta name="theme-color" content="#0a67ff" />
-
-  <!-- Open Graph -->
-  <meta property="og:type" content="article" />
-  <meta property="og:title" content="Privacy Policy — AI Ollama Helper" />
-  <meta property="og:description" content="Learn how AI Ollama Helper handles data, cookies/local storage, and analytics. We load analytics only after you consent." />
-  <meta property="og:image" content="https://ai-ollama.github.io/ollama-og-image.png" />
-  <meta property="og:url" content="https://ai-ollama.github.io/privacy.html" />
-  <meta property="og:site_name" content="AI Ollama Helper" />
-  <meta property="og:locale" content="en_US" />
-  <meta property="og:updated_time" content="2026-04-29T17:04:30Z" />
-
-  <!-- Twitter Card -->
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Privacy Policy — AI Ollama Helper" />
-  <meta name="twitter:description" content="We only load analytics after consent. Read about cookies/local storage, what we collect, and your choices." />
-  <meta name="twitter:image" content="https://ai-ollama.github.io/ollama-og-image.png" />
-
-  <!-- Schema.org: WebPage (Last updated) -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "WebPage",
-    "name": "Privacy Policy",
-    "url": "https://ai-ollama.github.io/privacy.html",
-    "datePublished": "2026-04-29",
-    "dateModified": "2026-04-29"
-  }
-  </script>
-
-  <!-- Favicons -->
-  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
-  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
-  <link rel="manifest" href="/site.webmanifest" />
-  <link rel="shortcut icon" href="/favicon.ico" />
-
-  <style>
-    :root{ --accent:#0a67ff; --bg:#f6f8fb; --text:#1f2937; --muted:#556277; --card:#fff; --border:#e5e8ee; }
-    *{ box-sizing:border-box }
-    html,body{ margin:0; padding:0; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; color:var(--text); background:var(--bg); line-height:1.6 }
-
-    .skip-link{ position:absolute; left:-9999px; top:auto; width:1px; height:1px; overflow:hidden }
-    .skip-link:focus{ position:static; width:auto; height:auto; padding:8px 12px; background:var(--accent); color:#fff; z-index:9999 }
-
-    .container{ max-width:900px; margin:0 auto; padding:0 20px }
-    header{ position:sticky; top:0; background:var(--card); border-bottom:1px solid var(--border); z-index:40 }
-    .header-inner{ display:flex; align-items:center; justify-content:space-between; padding:14px 0 }
-    .brand{ display:flex; align-items:center; gap:12px; text-decoration:none; color:inherit }
-    .brand-logo{ width:40px; height:40px; border-radius:10px; background:var(--accent); display:grid; place-items:center; color:#fff; font-weight:900 }
-    .brand-title{ font-weight:800 }
-    .brand-sub{ font-size:12px; color:var(--muted) }
-
-    nav[aria-label="Primary"] ul{ list-style:none; margin:0; padding:0; display:flex; gap:14px; flex-wrap:wrap }
-    nav[aria-label="Primary"] a{ color:#334155; text-decoration:none; font-weight:700; padding:8px 10px; border-radius:10px }
-    nav[aria-label="Primary"] a:hover{ background:#eef4ff; color:var(--accent) }
-
-    main{ padding:36px 0 0 }
-    h1{ font-size:34px; color:var(--accent); margin:0 0 6px; font-weight:900 }
-    .lead{ color:var(--muted); margin:0 0 16px }
-    h2{ margin:20px 0 8px; font-size:20px }
-    p{ color:#3b4756; margin:0 0 10px }
-    ul{ color:#3b4756 }
-    .card{ background:var(--card); border:1px solid var(--border); border-radius:16px; padding:18px; box-shadow:0 1px 3px rgba(0,0,0,.06); margin-bottom:14px }
-
-    .note{ color:#64748b; font-size:14px; margin-top:8px }
-
-    footer{ margin-top:36px; background:var(--card); border-top:1px solid var(--border); padding:26px 0; color:#6b7280; font-size:14px }
-    .footer-links{ display:flex; gap:16px; justify-content:center; flex-wrap:wrap; margin-bottom:8px }
-    .footer-links a{ color:#6b7280; text-decoration:none }
-    .footer-links a:hover{ text-decoration:underline }
-
-    /* Cookie banner */
-    .cookie-banner{ position:fixed; inset-inline:0; bottom:0; background:rgba(15,23,42,.96); color:#fff; display:none; gap:14px; align-items:flex-start; padding:16px 18px; z-index:1000; box-shadow:0 -8px 24px rgba(0,0,0,.35) }
-    .cookie-banner.show{ display:flex }
-    .cookie-banner p{ margin:0; flex:1; line-height:1.5 }
-    .cookie-banner a{ color:#a0c4ff; text-decoration:underline }
-    .cookie-actions{ display:flex; gap:10px; flex-wrap:wrap }
-    .cookie-btn{ border:none; padding:10px 16px; border-radius:8px; cursor:pointer; font-weight:700 }
-    .cookie-accept{ background:var(--accent); color:#fff }
-    .cookie-reject{ background:#334155; color:#e2e8f0 }
-  </style>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Privacy Policy — AI Ollama Helper</title>
+  <meta name="description" content="Privacy policy for AI Ollama Helper: what data we collect, cookie consent, Google Analytics 4, affiliate link disclosure, and your choices.">
+  <link rel="canonical" href="https://ai-ollama.github.io/privacy.html">
+  <meta name="last-modified" content="2026-06-08">
+  <meta property="og:title" content="Privacy Policy — AI Ollama Helper">
+  <meta property="og:description" content="Privacy policy for AI Ollama Helper: what data we collect, cookie consent, Google Analytics 4, affiliate link disclosure, and your choices.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://ai-ollama.github.io/privacy.html">
+  <meta property="og:image" content="https://ai-ollama.github.io/ollama-og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.svg">
+  
+  
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="shortcut icon" href="/favicon.ico"><link rel="manifest" href="/site.webmanifest">
+  <link rel="stylesheet" href="/style.css">
 </head>
 <body>
-  <a class="skip-link" href="#main">Skip to content</a>
-  <header>
-    <div class="container header-inner">
-      <a href="/" class="brand" aria-label="AI Ollama Helper home">
-        <div class="brand-logo" aria-hidden="true">AI</div>
-        <div>
-          <div class="brand-title">AI Ollama Helper</div>
-          <div class="brand-sub">Local LLM Hub</div>
-        </div>
-      </a>
-      <nav aria-label="Primary">
-        <ul>
-          <li><a href="/">Download</a></li>
-          <li><a href="/install-windows.html">Install</a></li>
-          <li><a href="/models.html">Models</a></li>
-          <li><a href="/python.html">Python</a></li>
-          <li><a href="/faq.html">FAQ</a></li>
-          <li><a href="/privacy-offline.html">Privacy & Offline</a></li>
-        </ul>
-      </nav>
+<nav class="site-nav"><div class="wrap"><div class="nav-inner">
+  <a href="/" class="nav-logo"><div class="nav-logo-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M4.22 4.22l2.12 2.12M17.66 17.66l2.12 2.12M2 12h3M19 12h3M4.22 19.78l2.12-2.12M17.66 6.34l2.12-2.12"/></svg></div><span class="nav-logo-name">AI Ollama</span></a>
+  <div class="nav-links">
+    <a href="/" id="nl-home">Download</a>
+    <a href="/install-windows.html" id="nl-install">Install</a>
+    <a href="/gpu-acceleration.html" id="nl-gpu">GPU</a>
+    <a href="/models.html" id="nl-models">Models</a>
+    <a href="/faq.html" id="nl-faq">FAQ</a>
+    <a href="/troubleshooting.html" id="nl-ts">Help</a>
+  </div>
+  <a href="/" class="nav-cta"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Download</a>
+</div></div></nav>
+<div class="page-hero"><div class="wrap">
+  <nav class="breadcrumb"><a href="/">ai-ollama.github.io</a> <span>/</span> <span>privacy</span></nav>
+  <span class="page-tag">Legal</span>
+  <h1>Privacy Policy</h1>
+  <p class="page-lead">What data AI Ollama Helper collects, how analytics works, affiliate link disclosure and your choices. Last updated: June 2026.</p>
+  
+</div></div>
+<div class="wrap"><div class="content-layout">
+  <main><div class="section" aria-labelledby="who-h2"><span class="section-label">About this site</span><h2 id="who-h2">Who we are</h2>
+<p>AI Ollama Helper is a community-driven guide site that helps Windows users download, install and configure Ollama. This site is not affiliated with the official Ollama project or Ollama Inc. The official Ollama website is <a href="https://ollama.com" rel="noopener">ollama.com</a>.</p>
+</div>
+<div class="section" aria-labelledby="collect-h2"><span class="section-label">Data collection</span><h2 id="collect-h2">What we collect</h2>
+<p>By default we collect no personal data. If you click <strong>Accept</strong> in the cookie banner, we load Google Analytics 4 to understand site usage. We also store your consent choice in your browser's local storage.</p>
+<ul><li>Consent choice stored in <code>localStorage</code> as <code>ollama_consent</code>. This is a local value on your device only &mdash; we never see it.</li>
+<li>If analytics is accepted: page views and download button clicks are tracked via GA4.</li>
+<li>We do not collect: names, email addresses, IP addresses, or any personally identifiable information.</li></ul>
+</div>
+<div class="section" aria-labelledby="cookies-h2"><span class="section-label">Cookies</span><h2 id="cookies-h2">Cookies and local storage</h2>
+<p>This site uses your browser's <code>localStorage</code> to remember your analytics consent preference. We do not set any marketing cookies, tracking cookies, or third-party cookies unless you explicitly accept analytics.</p>
+<p>If you accepted analytics and want to withdraw consent: open your browser's developer tools (F12) &rarr; Application &rarr; Local Storage &rarr; delete the <code>ollama_consent</code> key. The cookie banner will reappear on your next visit.</p>
+</div>
+<div class="section" aria-labelledby="analytics-h2"><span class="section-label">Analytics</span><h2 id="analytics-h2">Google Analytics 4</h2>
+<p>If you click <strong>Accept</strong>, we load Google Analytics 4 (GA4) with consent mode enabled. GA4 is governed by Google's privacy policies. We use it only to understand which pages are useful and how users navigate the site.</p>
+<ul><li>What we track: page views, session counts, approximate country, and download button clicks.</li>
+<li>We do not use GA4 for advertising, remarketing, or cross-site tracking.</li>
+<li>If you click <strong>Decline</strong>, no analytics scripts are loaded at all.</li></ul>
+</div>
+<div class="section" aria-labelledby="affiliate-h2"><span class="section-label">Affiliate links</span><h2 id="affiliate-h2">Download links and affiliate disclosure</h2>
+<p>Some download links on this site are affiliate or partner links. We may receive a small commission if you download software through these links, at no extra cost to you. This helps fund the site's operation.</p>
+<p>The official Ollama installer is always available for free directly at <a href="https://ollama.com/download/windows" rel="noopener">ollama.com/download/windows</a>.</p>
+</div>
+<div class="section" aria-labelledby="third-h2"><span class="section-label">Third-party links</span><h2 id="third-h2">External links</h2>
+<p>This site links to third-party websites including ollama.com, GitHub, AMD, NVIDIA and Microsoft. We are not responsible for their content or privacy practices. Review their policies when visiting external sites.</p>
+</div>
+<div class="section" aria-labelledby="rights-h2"><span class="section-label">Your rights</span><h2 id="rights-h2">Your choices</h2>
+<ul><li>Accept or decline analytics via the cookie banner on your first visit.</li>
+<li>Withdraw consent at any time by clearing <code>ollama_consent</code> from localStorage.</li>
+<li>Use the site with analytics declined &mdash; all content is fully accessible without accepting cookies.</li></ul>
+</div>
+<div class="section" aria-labelledby="changes-h2"><span class="section-label">Updates</span><h2 id="changes-h2">Changes to this policy</h2>
+<p>We may update this policy to reflect improvements or legal requirements. The last-modified date at the top of this page will be updated accordingly.</p>
+</div></main>
+  <aside class="content-sidebar"><div class="sb-card"><div class="sb-card-title">Sections</div><ul class="sb-links"><li><a href="#who-h2">Who we are</a></li><li><a href="#collect-h2">What we collect</a></li><li><a href="#cookies-h2">Cookies</a></li><li><a href="#analytics-h2">Analytics</a></li><li><a href="#affiliate-h2">Affiliate links</a></li><li><a href="#third-h2">External links</a></li><li><a href="#rights-h2">Your choices</a></li></ul></div><div class="sb-card"><div class="sb-card-title">Install & setup</div><ul class="sb-links"><li><a href="/">Download Ollama</a></li><li><a href="/install-windows.html">Install on Windows</a></li><li><a href="/update.html">Update Ollama</a></li><li><a href="/uninstall.html">Uninstall</a></li></ul></div><div class="sb-card"><div class="sb-card-title">Features</div><ul class="sb-links"><li><a href="/gpu-acceleration.html">GPU Acceleration</a></li><li><a href="/models.html">Models Hub</a></li><li><a href="/privacy-offline.html">Offline & Privacy</a></li><li><a href="/benchmarks.html">Benchmarks</a></li><li><a href="/python.html">Python API</a></li></ul></div><div class="sb-card"><div class="sb-card-title">Troubleshoot</div><ul class="sb-links"><li><a href="/troubleshooting.html">Troubleshooting</a></li><li><a href="/ollama-not-recognized.html">Not recognized</a></li><li><a href="/ollama-offline.html">Is Ollama offline?</a></li><li><a href="/ollama-port-11434.html">Port 11434</a></li><li><a href="/ollama-models-location.html">Models location</a></li></ul></div><div class="sb-card"><div class="sb-card-title">Models</div><ul class="sb-links"><li><a href="/llama-3.html">Llama 3</a></li><li><a href="/mistral.html">Mistral</a></li><li><a href="/qwen-2-5.html">Qwen 2.5</a></li><li><a href="/phi-4-gemma-2.html">Phi-4 & Gemma 2</a></li><li><a href="/ollama-directml.html">DirectML / AMD</a></li></ul></div></aside>
+</div></div>
+<footer class="site-footer"><div class="wrap">
+  <div class="footer-inner">
+    <div>
+      <div class="footer-logo"><div class="footer-logo-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M4.22 4.22l2.12 2.12M17.66 17.66l2.12 2.12M2 12h3M19 12h3M4.22 19.78l2.12-2.12M17.66 6.34l2.12-2.12"/></svg></div><span class="footer-logo-name">AI Ollama</span></div>
+      <p class="footer-tagline">Unofficial Windows guide for Ollama &mdash; download, install, configure, troubleshoot.</p>
     </div>
-  </header>
-
-  <main id="main" class="container">
-    <h1>Privacy Policy</h1>
-    <p class="lead">We keep things simple: we only load basic analytics if you consent, and we don’t collect personal data for this site’s functionality.</p>
-
-    <section class="card" aria-labelledby="who">
-      <h2 id="who">Who we are</h2>
-      <p>AI Ollama Helper is a community‑driven site that helps users run local LLMs with Ollama on Windows. This site is not affiliated with the official Ollama project.</p>
-    </section>
-
-    <section class="card" aria-labelledby="what">
-      <h2 id="what">What we collect</h2>
-      <p>By default, we do not collect or store personal information. If you click “Accept” in the cookie banner, we load basic analytics (see below). We also store your consent choice locally on your device.</p>
-      <ul>
-        <li>Consent state (accepted/rejected) stored in your browser’s local storage.</li>
-        <li>Basic analytics (page views and a few events like download button clicks) only after you consent.</li>
+    <div>
+      <div class="footer-col-title">Install &amp; setup</div>
+      <ul class="footer-links">
+        <li><a href="/">Download Ollama</a></li>
+        <li><a href="/install-windows.html">Install on Windows</a></li>
+        <li><a href="/update.html">Update Ollama</a></li>
+        <li><a href="/uninstall.html">Uninstall</a></li>
+        <li><a href="/install-openssl-windows-server.html">Windows Server</a></li>
       </ul>
-    </section>
-
-    <section class="card" aria-labelledby="cookies">
-      <h2 id="cookies">Cookies and local storage</h2>
-      <p>We use your browser’s local storage to remember your cookie preference (<code>cookieConsent</code>). This avoids asking you on every visit. We do not set marketing cookies.</p>
-      <p>You can change your choice anytime using “Cookie preferences” in the footer.</p>
-    </section>
-
-    <section class="card" aria-labelledby="analytics">
-      <h2 id="analytics">Analytics</h2>
-      <p>We use Google Analytics 4 (GA4) to understand how the site is used, but it is loaded only after you click “Accept”. Until then, no analytics scripts are loaded.</p>
-      <ul>
-        <li>What we track: page views, and simple events like clicks on the download button.</li>
-        <li>What we do not track: we don’t set user IDs, and we don’t collect text you type on the site.</li>
-        <li>You can revoke consent anytime via “Cookie preferences”.</li>
-      </ul>
-      <p class="note">Your browser or extensions can also block analytics globally if you prefer.</p>
-    </section>
-
-    <section class="card" aria-labelledby="third">
-      <h2 id="third">Third‑party links</h2>
-      <p>This site links to third‑party websites (e.g., the official Ollama download page). We are not responsible for their content or privacy practices. Review their policies when visiting.</p>
-    </section>
-
-    <section class="card" aria-labelledby="retention">
-      <h2 id="retention">Data retention</h2>
-      <p>We do not store personal data on our servers. Aggregated analytics data, if collected after your consent, is processed by Google under their policies. You can clear your local storage to erase your consent choice.</p>
-    </section>
-
-    <section class="card" aria-labelledby="rights">
-      <h2 id="rights">Your choices</h2>
-      <ul>
-        <li>Accept or reject analytics in the cookie banner.</li>
-        <li>Change your preference anytime via “Cookie preferences” in the footer.</li>
-        <li>Use browser settings or extensions to block analytics scripts.</li>
-        <li>Contact us if you have questions (see below).</li>
-      </ul>
-    </section>
-
-    <section class="card" aria-labelledby="contact">
-      <h2 id="contact">Contact</h2>
-      <p>Questions about this policy? Please reach out via our site repository or issue tracker associated with this project.</p>
-    </section>
-
-    <section class="card" aria-labelledby="changes">
-      <h2 id="changes">Changes to this policy</h2>
-      <p>We may update this policy to reflect improvements or legal requirements. We’ll update the “Last updated” date in the footer below.</p>
-    </section>
-
-    <p class="note">For guidance on running fully offline, see <a href="/privacy-offline.html">Privacy & Offline</a>.</p>
-  </main>
-
-  <footer>
-    <div class="container">
-      <div class="footer-links">
-        <a href="/privacy.html" aria-current="page">Privacy Policy</a>
-        <a href="/terms.html">Terms of Service</a>
-        <a href="/sitemap.xml">Sitemap</a>
-        <a href="#" id="open-cookie-preferences">Cookie preferences</a>
-      </div>
-      <div style="text-align:center;">© <span id="year"></span> AI Ollama Helper Project • Community resource</div>
-      <div class="last-updated" style="margin-top:6px; font-size:13px; color:#64748b; text-align:center;">Last updated: April 29, 2026</div>
     </div>
-  </footer>
-
-  <!-- Cookie Consent -->
-  <div id="cookie-banner" class="cookie-banner" role="dialog" aria-live="polite" aria-label="Cookie consent banner">
-    <p>
-      We use basic analytics to improve this site. You can accept or reject optional cookies. Learn more in our <a href="/privacy.html">Privacy Policy</a>.
-    </p>
-    <div class="cookie-actions">
-      <button class="cookie-btn cookie-reject" id="cookie-reject">Reject</button>
-      <button class="cookie-btn cookie-accept" id="cookie-accept">Accept</button>
+    <div>
+      <div class="footer-col-title">Features</div>
+      <ul class="footer-links">
+        <li><a href="/gpu-acceleration.html">GPU Acceleration</a></li>
+        <li><a href="/models.html">Models Hub</a></li>
+        <li><a href="/privacy-offline.html">Offline &amp; Privacy</a></li>
+        <li><a href="/benchmarks.html">Benchmarks</a></li>
+        <li><a href="/python.html">Python API</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Help</div>
+      <ul class="footer-links">
+        <li><a href="/troubleshooting.html">Troubleshooting</a></li>
+        <li><a href="/ollama-not-recognized.html">Not recognized fix</a></li>
+        <li><a href="/ollama-offline.html">Is Ollama offline?</a></li>
+        <li><a href="/faq.html">FAQ</a></li>
+        <li><a href="/privacy.html">Privacy policy</a></li>
+      </ul>
     </div>
   </div>
-
-  <script>
-    // Footer year
-    document.getElementById('year').textContent = new Date().getFullYear();
-
-    // Consent-gated GA loader (consistent with other pages)
-    const CONSENT_KEY='cookieConsent';
-    function loadGA(){ if(window.__gaLoaded) return; window.__gaLoaded=true; const s=document.createElement('script'); s.async=true; s.src='https://www.googletagmanager.com/gtag/js?id=G-JZTGSFRZBD'; document.head.appendChild(s); window.dataLayer=window.dataLayer||[]; function gtag(){dataLayer.push(arguments)} window.gtag=gtag; gtag('js', new Date()); gtag('config','G-JZTGSFRZBD'); }
-    function showBanner(){document.getElementById('cookie-banner').classList.add('show')} function hideBanner(){document.getElementById('cookie-banner').classList.remove('show')}
-    (function(){ const saved=localStorage.getItem(CONSENT_KEY); if(!saved){ setTimeout(showBanner,600); } else if(saved==='accepted'){ loadGA(); }
-      document.getElementById('cookie-accept').addEventListener('click',function(){ localStorage.setItem(CONSENT_KEY,'accepted'); hideBanner(); loadGA(); });
-      document.getElementById('cookie-reject').addEventListener('click',function(){ localStorage.setItem(CONSENT_KEY,'rejected'); hideBanner(); });
-      document.getElementById('open-cookie-preferences').addEventListener('click',function(e){ e.preventDefault(); showBanner(); });
-    })();
-  </script>
-</body>
-</html>
+  <div class="footer-bottom">
+    <p class="footer-copy">Not affiliated with Ollama or its developers. Unofficial guide site.</p>
+    <p class="footer-legal"><strong>Affiliate disclosure:</strong> Download links may be partner links.</p>
+  </div>
+</div></footer>
+<div class="cookie-bar" id="cookieBar" style="display:none">
+  <p>We use Google Analytics to understand traffic. <a href="/privacy.html">Privacy policy</a></p>
+  <div class="cookie-btns"><button class="cookie-accept" id="cookieAccept">Accept</button><button class="cookie-decline" id="cookieDecline">Decline</button></div>
+</div>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-JZTGSFRZBD"></script>
+<script>
+window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}
+gtag('consent','default',{analytics_storage:'denied',ad_storage:'denied'});
+gtag('js',new Date());gtag('config','G-JZTGSFRZBD',{send_page_view:false});
+function grantGA(){gtag('consent','update',{analytics_storage:'granted'});gtag('event','page_view',{page_location:location.href,page_title:document.title})}
+document.addEventListener('DOMContentLoaded',function(){
+  var bar=document.getElementById('cookieBar');
+  var c=localStorage.getItem('ollama_consent');
+  if(!c){bar.style.display='flex'}else if(c==='1'){grantGA()}
+  document.getElementById('cookieAccept').addEventListener('click',function(){localStorage.setItem('ollama_consent','1');grantGA();bar.style.display='none'});
+  document.getElementById('cookieDecline').addEventListener('click',function(){localStorage.setItem('ollama_consent','0');bar.style.display='none'});
+});
+</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"Privacy Policy","description":"Privacy policy for AI Ollama Helper site.","url":"https://ai-ollama.github.io/privacy.html"}</script>
+<script>var el=document.getElementById('nl-home');if(el)el.classList.add('active');</script>
+</body></html>
